@@ -19,6 +19,16 @@ export function Hero() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
           >
+            <div className="mb-4 inline-flex items-center gap-3">
+              <Image
+                src="/assets/perfil.webp"
+                alt="Foto de perfil de Mostafa Cherif"
+                width={56}
+                height={56}
+                className="h-14 w-14 rounded-full border border-[var(--color-border)] object-cover"
+                priority
+              />
+            </div>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-secondary)]">
               Mostafa Cherif · Edicion para creadores
             </p>
@@ -65,7 +75,6 @@ export function Hero() {
                   alt="After Effects"
                   width={68}
                   height={68}
-                  priority
                   className="h-[74px] w-[74px] rounded-xl object-cover"
                 />
                 <Image
@@ -73,7 +82,6 @@ export function Hero() {
                   alt="Photoshop"
                   width={68}
                   height={68}
-                  priority
                   className="h-[74px] w-[74px] rounded-xl object-cover"
                 />
                 <Image
@@ -81,7 +89,6 @@ export function Hero() {
                   alt="Premiere Pro"
                   width={68}
                   height={68}
-                  priority
                   className="h-[74px] w-[74px] rounded-xl object-cover"
                 />
               </div>

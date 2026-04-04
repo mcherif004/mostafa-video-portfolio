@@ -33,13 +33,40 @@ export function ClientsMarquee() {
       </div>
       <div className="w-screen pl-[calc(50%-50vw)]" aria-label="Canales de YouTube">
         <div className="flex w-max animate-[marquee_28s_linear_infinite]">
-          {[...channels, ...channels].map((c, idx) => (
+          {channels.map((c, idx) => (
             <motion.a
               key={`${c.name}-${idx}`}
               className="mr-3 inline-flex min-w-[200px] items-center gap-3 rounded-2xl border border-white/10 bg-black px-3 py-2 text-white transition hover:-translate-y-0.5 hover:border-sky-300/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
               href={c.href}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Abrir canal de YouTube ${c.name} (${c.sub})`}
+              whileHover={{ y: -3, scale: 1.01 }}
+            >
+              <Image
+                src={`https://unavatar.io/youtube/${c.name}`}
+                alt=""
+                className="h-12 w-12 rounded-full object-cover"
+                width={48}
+                height={48}
+                loading="lazy"
+                unoptimized
+              />
+              <span className="min-w-0 text-left leading-tight">
+                <span className="block truncate text-base font-bold text-white">{c.name}</span>
+                <span className="block text-xs font-semibold text-sky-300">{c.sub}</span>
+              </span>
+            </motion.a>
+          ))}
+          {channels.map((c, idx) => (
+            <motion.a
+              key={`${c.name}-clone-${idx}`}
+              className="mr-3 inline-flex min-w-[200px] items-center gap-3 rounded-2xl border border-white/10 bg-black px-3 py-2 text-white transition hover:-translate-y-0.5 hover:border-sky-300/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-hidden="true"
+              tabIndex={-1}
               whileHover={{ y: -3, scale: 1.01 }}
             >
               <Image

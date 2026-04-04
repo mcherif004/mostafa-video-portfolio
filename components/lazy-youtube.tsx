@@ -52,7 +52,7 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
       }}
       role="button"
       tabIndex={0}
-      aria-label={`Cargar video: ${title}`}
+      aria-label={`Cargar reproductor de YouTube para ${title}`}
     >
       {loaded ? (
         <iframe
@@ -65,7 +65,14 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
         />
       ) : (
         <>
-          <Image src={thumbnailUrl} alt="" fill className="object-cover transition duration-300 group-hover:scale-[1.03]" unoptimized />
+          <Image
+            src={thumbnailUrl}
+            alt={`Miniatura de ${title}`}
+            fill
+            sizes={portrait ? "(max-width: 768px) 85vw, 340px" : "(max-width: 768px) 100vw, 720px"}
+            className="object-cover transition duration-300 group-hover:scale-[1.03]"
+            unoptimized
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-black/15 to-black/65" />
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="rounded-xl bg-black/80 px-5 py-3 text-sm font-semibold text-white">Ver video</span>

@@ -15,12 +15,21 @@
 - [x] Pulir micro-interacciones con Framer Motion (entradas y hover)
 - [x] Completar SEO metadata (title, description, OG, Twitter, icon)
 - [x] Ejecutar prueba E2E de contacto con insercion real en `Lead`
+- [x] Mejorar accesibilidad AA (focus-visible, aria-labels, orden de tab)
+- [x] Optimizar imagenes para reducir CLS/LCP en Hero y embeds
+- [x] Ejecutar auditoria final de build y revisar peso de bundle
+- [x] Limpiar artefactos de prueba y ruido local
+- [x] Preparar guia de despliegue (`README_DEPLOY.md`)
 
 ## Notas
 
 - Objetivo de calidad: Home funcional y visualmente superior a la version HTML estatica.
 - Regla de trabajo: commit por bloque funcional terminado.
-- Prueba E2E ejecutada con `scripts/e2e-lead-test.ts`:
+- Prueba E2E ejecutada con `scripts/e2e-lead-test.ts` (luego eliminado para evitar ruido):
   - `action_status success`
   - `lead_created true`
   - limpieza de prueba: `lead_cleanup deleted`
+
+## Estado
+
+- **Production Ready**: si configuras las variables de entorno en Vercel, el proyecto esta listo para despliegue.
