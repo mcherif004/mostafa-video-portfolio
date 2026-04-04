@@ -1,36 +1,44 @@
-import { prisma } from "@/lib/db";
 import { Reveal } from "@/components/reveal";
 
 export async function Pricing() {
-  let services: Array<{
-    id: string;
-    name: string;
-    description: string | null;
-    pricingPlans: Array<{
-      id: string;
-      name: string;
-      price: unknown;
-      currency: string;
-      description: string | null;
-      features: unknown;
-    }>;
-  }> = [];
-  let dbError = false;
-
-  try {
-    services = await prisma.service.findMany({
-      include: {
-        pricingPlans: {
-          where: { active: true },
-          orderBy: { price: "asc" },
-        },
-      },
-      where: { active: true },
-      orderBy: { createdAt: "asc" },
-    });
-  } catch {
-    dbError = true;
-  }
+  const plans = [
+    {
+      id: "base",
+      name: "Base",
+      tagline: "Subida semanal",
+      price: "desde 25€",
+      features: [
+        "1 entrega semanal optimizada para publicación",
+        "Edición limpia y ritmo narrativo consistente",
+        "1 ronda de ajustes",
+      ],
+      highlighted: false,
+    },
+    {
+      id: "estandar",
+      name: "Estandar",
+      tagline: "Recomendado",
+      price: "desde 60€",
+      features: [
+        "Mayor calidad de montaje y sonido",
+        "Adaptado a tu estilo y tipo de audiencia",
+        "Hasta 2 rondas de ajustes",
+      ],
+      highlighted: true,
+    },
+    {
+      id: "premium",
+      name: "Premium",
+      tagline: "Motion Graphics y efectos",
+      price: "desde 110€",
+      features: [
+        "Diseño de motion graphics y overlays",
+        "Efectos avanzados de edición",
+        "Prioridad de entrega y soporte dedicado",
+      ],
+      highlighted: false,
+    },
+  ];
 
   return (
     <section id="pricing" className="bg-[var(--color-accent)]/75 py-14 md:py-20 lg:py-24" aria-labelledby="pricing-title">
@@ -42,57 +50,53 @@ export async function Pricing() {
           Precios
         </h2>
 
-        {dbError && (
-          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">
-            No se pudo cargar pricing desde la base de datos.
-          </div>
-        )}
+        <p className="mb-8 max-w-3xl text-[var(--color-text)]">
+          Estructura de precios orientada a resultados: más consistencia, mejor retención y un flujo de
+          publicación estable para tu canal.
+        </p>
 
-        {!dbError && services.length === 0 && (
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
-            Aun no hay servicios ni planes disponibles.
-          </div>
-        )}
-
-        {!dbError &&
-          services.length > 0 &&
-          services.map((service) => (
-            <div key={service.id} className="mb-10">
-              <h3 className="mb-4 text-2xl font-semibold text-[var(--color-primary)]">{service.name}</h3>
-              {service.description && <p className="mb-6 max-w-3xl text-[var(--color-text)]">{service.description}</p>}
-
-              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {service.pricingPlans.map((plan, index) => (
-                  <Reveal key={plan.id} delay={index * 0.05}>
-                    <article
-                    key={plan.id}
-                    className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-[0_10px_24px_rgba(0,0,0,0.10)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.16)]"
-                  >
-                    <div>
-                      <h4 className="mb-2 text-lg font-semibold text-[var(--color-primary)]">{plan.name}</h4>
-                      <p className="mb-2 text-3xl font-extrabold text-[var(--color-primary)]">
-                        {String(plan.price)}€ <span className="text-sm font-bold opacity-80">por video</span>
-                      </p>
-                      {plan.description && <p className="mb-3 text-sm text-[var(--color-text)]">{plan.description}</p>}
-
-                      <ul className="space-y-2 text-sm text-[var(--color-text)]">
-                        {Array.isArray(plan.features) &&
-                          plan.features.map((feature, index) => (
-                            <li
-                              key={`${plan.id}-${index}`}
-                              className="pl-5 before:relative before:-left-5 before:mr-[-1.2rem] before:text-[var(--color-primary)] before:content-['•']"
-                            >
-                              {String(feature)}
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </article>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {plans.map((plan, index) => (
+            <Reveal key={plan.id} delay={index * 0.05}>
+              <article
+                className={`rounded-2xl border bg-[var(--color-card)] p-6 shadow-[0_10px_24px_rgba(0,0,0,0.10)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.16)] ${
+                  plan.highlighted
+                    ? "border-[var(--color-primary)] ring-2 ring-[color:var(--color-primary)]/30"
+                    : "border-[var(--color-border)]"
+                }`}
+              >
+                <p className="mb-2 inline-flex rounded-full bg-[color:var(--color-primary)]/12 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
+                  {plan.tagline}
+                </p>
+                <h3 className="mb-2 text-xl font-bold text-[var(--color-primary)]">{plan.name}</h3>
+                <p className="mb-4 text-3xl font-extrabold text-[var(--color-primary)]">{plan.price}</p>
+                <ul className="space-y-2 text-sm text-[var(--color-text)]">
+                  {plan.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="pl-5 before:relative before:-left-5 before:mr-[-1.2rem] before:text-[var(--color-primary)] before:content-['•']"
+                    >
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </Reveal>
           ))}
+        </div>
+
+        <Reveal delay={0.2} className="mt-8">
+          <article className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-[0_10px_24px_rgba(0,0,0,0.10)]">
+            <h3 className="mb-2 text-xl font-bold text-[var(--color-primary)]">Packs de Clips</h3>
+            <p className="mb-3 text-[var(--color-text)]">
+              Para creadores que necesitan volumen semanal con consistencia visual.
+            </p>
+            <p className="text-2xl font-extrabold text-[var(--color-primary)]">10 clips x 40€</p>
+            <p className="mt-2 text-sm text-[var(--color-text)]/85">
+              Incluye adaptación de formato, ritmo optimizado y entrega organizada por lote.
+            </p>
+          </article>
+        </Reveal>
       </div>
     </section>
   );
