@@ -51,10 +51,16 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
   const currentThumb = thumbsPool[index];
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-[1fr_2fr] lg:grid-rows-2">
-      <article className="rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] lg:row-span-2">
-        <div className="mx-auto max-w-[300px]">
-          <LazyYouTube url={heroVertical.url || ""} title={heroVertical.title} portrait autoplayMuted />
+    <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-[1fr_2fr] lg:grid-rows-2 lg:items-stretch">
+      <article className="flex min-h-0 flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] lg:row-span-2 lg:min-h-[420px]">
+        <div className="flex min-h-[260px] flex-1 items-stretch justify-center lg:min-h-0">
+          <LazyYouTube
+            url={heroVertical.url || ""}
+            title={heroVertical.title}
+            portrait
+            autoplayMuted
+            fillContainer
+          />
         </div>
         <div className="pt-3">
           <h3 className="text-base font-semibold text-[var(--color-primary)] md:text-lg">{heroVertical.title}</h3>
@@ -102,12 +108,13 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
         </div>
       </article>
 
-      <article className="rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)]">
-        <div className="w-full overflow-hidden rounded-xl">
+      <article className="flex min-h-0 flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)]">
+        <div className="w-full min-w-0 overflow-hidden rounded-xl">
           <LazyYouTube
             url={mainHorizontal.url || backupHorizontal.url || ""}
             title={mainHorizontal.title}
             autoplayMuted
+            fillContainer
           />
         </div>
         <div className="pt-3">

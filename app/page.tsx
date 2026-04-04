@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import dynamicImport from "next/dynamic";
 import { Pricing, PricingSkeleton } from "@/components/pricing";
+import { PricingPacks } from "@/components/pricing-packs";
 import { Work, WorkSkeleton } from "@/components/work";
 
 export const dynamic = "force-dynamic";
@@ -14,7 +15,6 @@ const Contact = dynamicImport(() => import("@/components/contact").then((mod) =>
 const ClientsMarquee = dynamicImport(() =>
   import("@/components/clients-marquee").then((mod) => mod.ClientsMarquee)
 );
-const Conditions = dynamicImport(() => import("@/components/conditions").then((mod) => mod.Conditions));
 const TrackingReport = dynamicImport(() =>
   import("@/components/tracking-report").then((mod) => mod.TrackingReport)
 );
@@ -29,12 +29,12 @@ export default function Home() {
       <Suspense fallback={<WorkSkeleton />}>
         <Work />
       </Suspense>
+      <PricingPacks />
       <Suspense fallback={<PricingSkeleton />}>
         <Pricing />
       </Suspense>
       <TrackingReport />
       <Contact />
-      <Conditions />
     </main>
   );
 }
