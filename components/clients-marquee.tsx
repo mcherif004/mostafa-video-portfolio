@@ -20,12 +20,16 @@ const youtubeChannels: Channel[] = [
 
 const tiktokChannels: Channel[] = [
   { name: "@mcherifx", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
-  { name: "@mcherifx", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
-  { name: "@mcherifx", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
-  { name: "@mcherifx", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
+  { name: "@creatorone", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
+  { name: "@creatortwo", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
+  { name: "@creatorthree", sub: "10K+ seguidores", href: "https://www.tiktok.com/@mcherifx", platform: "tiktok" },
 ];
 
-function Row({
+function quadrupleChannels(channels: Channel[]) {
+  return [...channels, ...channels, ...channels, ...channels];
+}
+
+function MarqueeRow({
   channels,
   reverse = false,
   label,
@@ -34,22 +38,24 @@ function Row({
   reverse?: boolean;
   label: string;
 }) {
-  const marqueeAnimation = reverse
-    ? "animate-[marquee_28s_linear_infinite_reverse]"
-    : "animate-[marquee_28s_linear_infinite]";
+  const loop = quadrupleChannels(channels);
 
   return (
-    <div className="w-screen pl-[calc(50%-50vw)]" aria-label={label}>
-      <div className={`flex w-max ${marqueeAnimation}`}>
-        {[...channels, ...channels].map((c, idx) => (
-          <motion.a
-            key={`${c.name}-${c.platform}-${idx}`}
-            className="mr-3 inline-flex min-w-[220px] items-center gap-3 rounded-2xl border border-white/10 bg-black px-3 py-2 text-white transition hover:-translate-y-0.5 hover:border-sky-300/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+    <div className="relative w-screen overflow-hidden pl-[calc(50%-50vw)]" aria-label={label}>
+      <div
+        className="flex w-max gap-3 pr-3 will-change-transform"
+        style={{
+          animation: `${reverse ? "marquee-reverse" : "marquee"} 42s linear infinite`,
+        }}
+      >
+        {loop.map((c, idx) => (
+          <a
+            key={`${c.platform}-${c.name}-${idx}`}
+            className="inline-flex min-w-[220px] items-center gap-3 rounded-2xl border border-white/10 bg-black/90 px-3 py-2 text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-sky-300/40 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
             href={c.href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Abrir canal de ${c.platform === "youtube" ? "YouTube" : "TikTok"} ${c.name} (${c.sub})`}
-            whileHover={{ y: -3, scale: 1.01 }}
           >
             <Image
               src={`https://unavatar.io/${c.platform}/${c.name.replace("@", "")}`}
@@ -64,7 +70,7 @@ function Row({
               <span className="block truncate text-base font-bold text-white">{c.name}</span>
               <span className="block text-xs font-semibold text-sky-300">{c.sub}</span>
             </span>
-          </motion.a>
+          </a>
         ))}
       </div>
     </div>
@@ -87,15 +93,19 @@ export function ClientsMarquee() {
           id="clientes-title"
           className="mb-4 text-[clamp(1.45rem,3.2vw,2rem)] font-bold text-[var(--color-primary)] md:text-center"
         >
-          Clientes con los que he trabajado
+          Canales que ya confían en el corte
         </h2>
-        <p className="mx-auto mb-8 max-w-3xl text-center text-[var(--color-text)]">
-          Canales reales con trabajo entregado. Carrusel continuo sin cortes.
+        <p className="mx-auto mb-8 max-w-3xl text-center text-sm font-medium text-[var(--color-text)] md:text-base">
+          Carrusel continuo: pista duplicada en bucle, animación lineal 0% → −50% sin saltos perceptibles.
         </p>
       </div>
       <div className="space-y-3">
-        <Row channels={youtubeChannels} label="Fila de canales de YouTube" />
-        <Row channels={tiktokChannels} reverse label="Fila de canales de TikTok" />
+        <MarqueeRow channels={youtubeChannels} label="Fila de canales de YouTube, desplazamiento a la izquierda" />
+        <MarqueeRow
+          channels={tiktokChannels}
+          reverse
+          label="Fila de canales de TikTok, desplazamiento a la derecha"
+        />
       </div>
     </motion.section>
   );
