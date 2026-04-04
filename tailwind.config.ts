@@ -23,7 +23,7 @@ const config: Config = {
         },
       },
       maxWidth: {
-        content: "1440px",
+        content: "64rem",
       },
     },
   },

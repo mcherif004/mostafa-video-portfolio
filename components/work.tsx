@@ -22,8 +22,14 @@ function getYoutubeEmbed(url: string) {
 
 function WorkCard({ project, vertical }: { project: Project; vertical: boolean }) {
   return (
-    <article className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_10px_24px_rgba(0,0,0,0.10)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.16)]">
-      <div className={vertical ? "border-b border-[var(--color-border)] px-3 py-3" : "border-b border-[var(--color-border)]"}>
+    <article className="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
+      <div
+        className={
+          vertical
+            ? "flex justify-center border-b border-[var(--color-border)] bg-[var(--color-accent)]/40 px-4 py-5"
+            : "border-b border-[var(--color-border)] p-3"
+        }
+      >
         <LazyYouTube url={getYoutubeEmbed(project.videoUrl)} title={project.title} portrait={vertical} />
       </div>
       <div className="p-4">

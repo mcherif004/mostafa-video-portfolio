@@ -18,17 +18,25 @@ type LazyYouTubeProps = {
   portrait?: boolean;
 };
 
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7L8 5z" />
+    </svg>
+  );
+}
+
 export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) {
   const [loaded, setLoaded] = useState(false);
   const videoId = useMemo(() => extractVideoId(url), [url]);
 
+  const landscapeShell = "relative overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10 aspect-video";
+  const portraitShell =
+    "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15";
+
   if (!videoId) {
     return (
-      <div
-        className={`relative overflow-hidden bg-black ${
-          portrait ? "mx-auto aspect-[9/16] h-[min(60vh,640px)] max-h-[60vh]" : "aspect-video"
-        }`}
-      >
+      <div className={portrait ? portraitShell : landscapeShell}>
         <iframe
           src={url}
           title={title}
@@ -46,19 +54,17 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
 
   return (
     <div
-      className={`group relative cursor-pointer overflow-hidden bg-black ${
-        portrait ? "mx-auto aspect-[9/16] h-[min(60vh,640px)] max-h-[60vh]" : "aspect-video"
-      }`}
-      onClick={() => setLoaded(true)}
+      className={`group ${portrait ? portraitShell : landscapeShell} ${!loaded ? "cursor-pointer" : ""}`}
+      onClick={() => !loaded && setLoaded(true)}
       onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
+        if (!loaded && (event.key === "Enter" || event.key === " ")) {
           event.preventDefault();
           setLoaded(true);
         }
       }}
-      role="button"
-      tabIndex={0}
-      aria-label={`Cargar reproductor de YouTube para ${title}`}
+      role={loaded ? undefined : "button"}
+      tabIndex={loaded ? undefined : 0}
+      aria-label={loaded ? undefined : `Reproducir video: ${title}`}
     >
       {loaded ? (
         <iframe
@@ -75,13 +81,15 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
             src={thumbnailUrl}
             alt={`Miniatura de ${title}`}
             fill
-            sizes={portrait ? "(max-width: 768px) 85vw, 340px" : "(max-width: 768px) 100vw, 720px"}
-            className="object-cover transition duration-300 group-hover:scale-[1.03]"
+            sizes={portrait ? "280px" : "(max-width: 768px) 100vw, 720px"}
+            className="object-cover transition duration-500 group-hover:scale-[1.04]"
             unoptimized
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/15 to-black/65" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="rounded-xl bg-black/80 px-5 py-3 text-sm font-semibold text-white">Ver video</span>
+            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-white/10 backdrop-blur-md transition group-hover:border-white/60 group-hover:bg-white/20">
+              <PlayIcon />
+            </span>
           </div>
         </>
       )}
