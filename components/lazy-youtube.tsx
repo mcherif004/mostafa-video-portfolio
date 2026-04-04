@@ -17,10 +17,10 @@ type LazyYouTubeProps = {
   title: string;
   portrait?: boolean;
   autoplayMuted?: boolean;
-  /** Rellena el ancho de la caja (bento); mantiene proporción con recorte vía overflow */
+  /** Adapta el ancho al contenedor manteniendo aspect-ratio */
   fillContainer?: boolean;
-  /** En horizontal + fillContainer: ancho máximo menor (columna secundaria) */
-  landscapeCompact?: boolean;
+  /** Rellena el contenedor padre al 100% (sin aspect-ratio propio) */
+  fillHeight?: boolean;
 };
 
 function PlayIcon() {
@@ -37,28 +37,35 @@ export function LazyYouTube({
   portrait = false,
   autoplayMuted = false,
   fillContainer = false,
-  landscapeCompact = false,
+  fillHeight = false,
 }: LazyYouTubeProps) {
   const [loaded, setLoaded] = useState(autoplayMuted);
   const videoId = useMemo(() => extractVideoId(url), [url]);
 
-  const landscapeShell = fillContainer
-    ? landscapeCompact
-      ? "relative mx-auto aspect-video w-full max-w-[min(100%,20rem)] overflow-hidden rounded-xl bg-black sm:max-w-[min(100%,22rem)] lg:max-w-[min(100%,24rem)]"
-      : "relative aspect-video w-full overflow-hidden rounded-xl bg-black"
-    : "relative aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10";
-  const portraitShell = fillContainer
-    ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,300px)] overflow-hidden rounded-xl bg-black sm:max-w-[min(100%,340px)] md:max-w-[min(100%,380px)]"
-    : "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15";
+  const shell = fillHeight
+    ? "relative h-full w-full overflow-hidden rounded-xl bg-black"
+    : portrait
+      ? fillContainer
+        ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,340px)] overflow-hidden rounded-xl bg-black md:max-w-[min(100%,400px)]"
+        : "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15"
+      : fillContainer
+        ? "relative aspect-video w-full overflow-hidden rounded-xl bg-black"
+        : "relative aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10";
+
+  const imgSizes = portrait
+    ? fillHeight
+      ? "(max-width: 1024px) 40vw, 480px"
+      : "(max-width: 640px) 85vw, 400px"
+    : "(max-width: 768px) 95vw, 720px";
 
   if (!videoId) {
     return (
-      <div className={portrait ? portraitShell : landscapeShell}>
+      <div className={shell}>
         <iframe
           src={autoplayMuted ? `${url}${url.includes("?") ? "&" : "?"}autoplay=1&mute=1&playsinline=1` : url}
           title={title}
           loading="lazy"
-          className="absolute inset-0 h-full w-full border-0 object-cover"
+          className="absolute inset-0 h-full w-full border-0"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
@@ -73,24 +80,24 @@ export function LazyYouTube({
 
   return (
     <div
-      className={`group ${portrait ? portraitShell : landscapeShell} ${!loaded ? "cursor-pointer" : ""}`}
+      className={`group ${shell} ${!loaded ? "cursor-pointer" : ""}`}
       onClick={() => !loaded && setLoaded(true)}
-      onKeyDown={(event) => {
-        if (!loaded && (event.key === "Enter" || event.key === " ")) {
-          event.preventDefault();
+      onKeyDown={(e) => {
+        if (!loaded && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
           setLoaded(true);
         }
       }}
       role={loaded ? undefined : "button"}
       tabIndex={loaded ? undefined : 0}
-      aria-label={loaded ? undefined : `Reproducir video: ${title}`}
+      aria-label={loaded ? undefined : `Reproducir: ${title}`}
     >
       {loaded ? (
         <iframe
           src={embedUrl}
           title={title}
           loading="lazy"
-          className="absolute inset-0 h-full w-full border-0 object-cover"
+          className="absolute inset-0 h-full w-full border-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
@@ -100,13 +107,7 @@ export function LazyYouTube({
             src={thumbnailUrl}
             alt={`Miniatura de ${title}`}
             fill
-            sizes={
-              portrait
-                ? fillContainer
-                  ? "(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 380px"
-                  : "280px"
-                : "(max-width: 768px) 100vw, 720px"
-            }
+            sizes={imgSizes}
             className="object-cover transition duration-500 group-hover:scale-[1.04]"
             unoptimized
           />

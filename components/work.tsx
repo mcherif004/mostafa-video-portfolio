@@ -103,13 +103,11 @@ export async function Work() {
         )}
 
         {!dbError && projects.length > 0 && (
-          <>
-            <WorkSliders
-              verticalItems={verticalItems}
-              horizontalItems={horizontalItems}
-              thumbnailItems={thumbnailItems}
-            />
-          </>
+          <WorkSliders
+            verticalItems={verticalItems}
+            horizontalItems={horizontalItems}
+            thumbnailItems={thumbnailItems}
+          />
         )}
       </div>
     </section>
