@@ -19,6 +19,8 @@ type LazyYouTubeProps = {
   autoplayMuted?: boolean;
   /** Rellena el ancho de la caja (bento); mantiene proporción con recorte vía overflow */
   fillContainer?: boolean;
+  /** En horizontal + fillContainer: ancho máximo menor (columna secundaria) */
+  landscapeCompact?: boolean;
 };
 
 function PlayIcon() {
@@ -35,15 +37,18 @@ export function LazyYouTube({
   portrait = false,
   autoplayMuted = false,
   fillContainer = false,
+  landscapeCompact = false,
 }: LazyYouTubeProps) {
   const [loaded, setLoaded] = useState(autoplayMuted);
   const videoId = useMemo(() => extractVideoId(url), [url]);
 
   const landscapeShell = fillContainer
-    ? "relative aspect-video w-full overflow-hidden rounded-xl bg-black"
+    ? landscapeCompact
+      ? "relative mx-auto aspect-video w-full max-w-[min(100%,20rem)] overflow-hidden rounded-xl bg-black sm:max-w-[min(100%,22rem)] lg:max-w-[min(100%,24rem)]"
+      : "relative aspect-video w-full overflow-hidden rounded-xl bg-black"
     : "relative aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10";
   const portraitShell = fillContainer
-    ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,240px)] overflow-hidden rounded-xl bg-black sm:max-w-[min(100%,260px)]"
+    ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,300px)] overflow-hidden rounded-xl bg-black sm:max-w-[min(100%,340px)] md:max-w-[min(100%,380px)]"
     : "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15";
 
   if (!videoId) {
@@ -95,7 +100,13 @@ export function LazyYouTube({
             src={thumbnailUrl}
             alt={`Miniatura de ${title}`}
             fill
-            sizes={portrait ? (fillContainer ? "(max-width: 1024px) 40vw, 260px" : "280px") : "(max-width: 768px) 100vw, 720px"}
+            sizes={
+              portrait
+                ? fillContainer
+                  ? "(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 380px"
+                  : "280px"
+                : "(max-width: 768px) 100vw, 720px"
+            }
             className="object-cover transition duration-500 group-hover:scale-[1.04]"
             unoptimized
           />

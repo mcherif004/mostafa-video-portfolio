@@ -51,8 +51,8 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
   const currentThumb = thumbsPool[index];
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 md:gap-6 lg:flex-row lg:items-start lg:justify-center">
-      <article className="w-full max-w-[240px] shrink-0 rounded-3xl border-4 border-black bg-[var(--color-card)] p-2.5 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] sm:max-w-[260px] lg:mx-0">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 md:gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
+      <article className="w-full max-w-[300px] shrink-0 rounded-3xl border-4 border-black bg-[var(--color-card)] p-2.5 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] sm:max-w-[340px] md:max-w-[380px] lg:mx-0">
         <div className="flex justify-center">
           <LazyYouTube
             url={heroVertical.url || ""}
@@ -70,20 +70,20 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
         </div>
       </article>
 
-      <div className="grid min-w-0 flex-1 grid-cols-1 gap-4 md:gap-6">
+      <div className="grid min-w-0 flex-1 grid-cols-1 gap-3 md:gap-4 lg:max-w-[min(100%,24rem)] lg:justify-items-stretch xl:max-w-[26rem]">
         <article
-          className="rounded-3xl border-4 border-black bg-[var(--color-card)] p-2.5 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] md:p-3"
+          className="rounded-3xl border-4 border-black bg-[var(--color-card)] p-2 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] md:p-2.5"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-neutral-100">
+          <div className="relative mx-auto aspect-video w-full max-w-[min(100%,20rem)] overflow-hidden rounded-xl bg-neutral-100 sm:max-w-[min(100%,22rem)] lg:max-w-full">
             {currentThumb?.url ? (
               <Image
                 src={currentThumb.url}
                 alt={currentThumb.title}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 66vw"
+                sizes="(max-width: 1024px) 90vw, 400px"
                 unoptimized
               />
             ) : (
@@ -111,13 +111,14 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
           </div>
         </article>
 
-        <article className="flex min-h-0 flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-2.5 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] md:p-3">
+        <article className="flex min-h-0 flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-2 transition duration-300 hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(0,0,0,0.14)] md:p-2.5">
           <div className="w-full min-w-0 overflow-hidden rounded-xl">
             <LazyYouTube
               url={mainHorizontal.url || backupHorizontal.url || ""}
               title={mainHorizontal.title}
               autoplayMuted
               fillContainer
+              landscapeCompact
             />
           </div>
           <div className="pt-2.5">
