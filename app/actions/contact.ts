@@ -7,13 +7,14 @@ const contactSchema = z.object({
   name: z.string().trim().min(2, "El nombre es obligatorio."),
   email: z.string().trim().email("Email invalido.").optional().or(z.literal("")),
   contact: z.string().trim().optional().or(z.literal("")),
+  services: z.array(z.string()).min(1, "Selecciona al menos un tipo de servicio."),
   message: z.string().trim().min(10, "El mensaje es demasiado corto."),
 });
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
   message: string;
-  errors?: Partial<Record<"name" | "email" | "message", string[]>>;
+  errors?: Partial<Record<"name" | "email" | "services" | "message", string[]>>;
 };
 
 export const initialContactFormState: ContactFormState = {
@@ -29,6 +30,7 @@ export async function submitContact(
     name: formData.get("name"),
     email: formData.get("email"),
     contact: formData.get("contact"),
+    services: formData.getAll("services"),
     message: formData.get("message"),
   });
 
@@ -41,12 +43,14 @@ export async function submitContact(
   }
 
   try {
+    const selectedServices = parsed.data.services.join(", ");
+
     await prisma.lead.create({
       data: {
         name: parsed.data.name,
         email: parsed.data.email || null,
         contact: parsed.data.contact || null,
-        message: parsed.data.message,
+        message: `Servicios: ${selectedServices}\n\n${parsed.data.message}`,
         source: "web",
         status: "new",
       },

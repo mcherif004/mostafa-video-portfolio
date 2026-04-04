@@ -33,6 +33,12 @@ export function ContactForm() {
     submitContact,
     initialContactFormState
   );
+  const serviceOptions = [
+    { id: "service-vertical", value: "Vertical", label: "Vertical" },
+    { id: "service-horizontal", value: "Horizontal", label: "Horizontal" },
+    { id: "service-miniatura", value: "Miniatura", label: "Miniatura" },
+    { id: "service-personalizado", value: "Personalizado", label: "Personalizado" },
+  ];
 
   return (
     <motion.form
@@ -82,6 +88,27 @@ export function ContactForm() {
             className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
           />
         </div>
+
+        <fieldset className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
+          <legend className="px-1 text-sm font-semibold text-[var(--color-text)]">
+            Tipo de servicio (obligatorio)
+          </legend>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            {serviceOptions.map((option) => (
+              <label key={option.id} htmlFor={option.id} className="inline-flex items-center gap-2 text-sm text-[var(--color-text)]">
+                <input
+                  id={option.id}
+                  name="services"
+                  value={option.value}
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+          <FieldError errors={state.errors?.services} />
+        </fieldset>
 
         <div>
           <label htmlFor="message" className="mb-1 block text-sm font-semibold text-[var(--color-text)]">
