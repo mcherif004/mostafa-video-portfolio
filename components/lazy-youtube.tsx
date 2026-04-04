@@ -43,7 +43,7 @@ export function LazyYouTube({
     ? "relative aspect-video w-full overflow-hidden rounded-xl bg-black"
     : "relative aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10";
   const portraitShell = fillContainer
-    ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,320px)] overflow-hidden rounded-xl bg-black"
+    ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,240px)] overflow-hidden rounded-xl bg-black sm:max-w-[min(100%,260px)]"
     : "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15";
 
   if (!videoId) {
@@ -95,7 +95,7 @@ export function LazyYouTube({
             src={thumbnailUrl}
             alt={`Miniatura de ${title}`}
             fill
-            sizes={portrait ? (fillContainer ? "(max-width: 1024px) 45vw, 320px" : "280px") : "(max-width: 768px) 100vw, 720px"}
+            sizes={portrait ? (fillContainer ? "(max-width: 1024px) 40vw, 260px" : "280px") : "(max-width: 768px) 100vw, 720px"}
             className="object-cover transition duration-500 group-hover:scale-[1.04]"
             unoptimized
           />

@@ -23,7 +23,17 @@ const config: Config = {
         },
       },
       maxWidth: {
-        content: "64rem",
+        /** ~max-w-5xl: layout mas compacto y centrado */
+        content: "60rem",
+      },
+      spacing: {
+        "section-sm": "clamp(2.5rem, 4.5vw, 3.5rem)",
+        "section": "clamp(3rem, 6vw, 4.75rem)",
+        "section-lg": "clamp(3.5rem, 7vw, 5.5rem)",
+      },
+      letterSpacing: {
+        premium: "-0.02em",
+        micro: "0.14em",
       },
     },
   },

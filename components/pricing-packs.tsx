@@ -22,7 +22,7 @@ export function PricingPacks() {
         <p className="section-kicker">Packs</p>
         <h2
           id="packs-title"
-          className="section-title-premium mb-3 text-[clamp(1.45rem,3vw,2.1rem)] font-bold"
+          className="section-title-premium mb-3 text-[clamp(1.3rem,2.6vw,1.9rem)] font-bold"
         >
           Volumen mensual sin perder calidad
         </h2>

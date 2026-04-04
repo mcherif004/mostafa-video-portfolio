@@ -81,7 +81,7 @@ export async function Work() {
         <p className="section-kicker">Resultados</p>
         <h2
           id="work-title"
-          className="section-title-premium mb-3 text-[clamp(1.65rem,3.5vw,2.45rem)] font-bold"
+          className="section-title-premium mb-3 text-[clamp(1.35rem,2.75vw,2rem)] font-bold"
         >
           Prueba social, no promesas vacías
         </h2>
@@ -122,7 +122,7 @@ export function WorkSkeleton() {
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <h2
           id="work-title"
-          className="mb-7 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+          className="mb-7 text-[clamp(1.35rem,2.75vw,2rem)] font-bold text-[var(--color-primary)]"
         >
           Prueba social
         </h2>
