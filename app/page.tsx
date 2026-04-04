@@ -6,6 +6,9 @@ import { Work, WorkSkeleton } from "@/components/work";
 export const dynamic = "force-dynamic";
 
 const Hero = dynamicImport(() => import("@/components/hero").then((mod) => mod.Hero));
+const FeaturedVideo = dynamicImport(() =>
+  import("@/components/featured-video").then((mod) => mod.FeaturedVideo)
+);
 const Services = dynamicImport(() => import("@/components/services").then((mod) => mod.Services));
 const Contact = dynamicImport(() => import("@/components/contact").then((mod) => mod.Contact));
 const ClientsMarquee = dynamicImport(() =>
@@ -20,7 +23,9 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <FeaturedVideo />
       <Services />
+      <ClientsMarquee />
       <Suspense fallback={<WorkSkeleton />}>
         <Work />
       </Suspense>
@@ -29,7 +34,6 @@ export default function Home() {
       </Suspense>
       <TrackingReport />
       <Contact />
-      <ClientsMarquee />
       <Conditions />
     </main>
   );

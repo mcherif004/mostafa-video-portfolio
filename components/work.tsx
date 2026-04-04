@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/db";
-import { LazyYouTube } from "@/components/lazy-youtube";
-import { Reveal } from "@/components/reveal";
+import { WorkSliders } from "@/components/work-sliders";
 type Project = {
   id: string;
   title: string;
@@ -8,6 +7,14 @@ type Project = {
   videoUrl: string;
   thumbnailUrl: string | null;
   format: "VERTICAL" | "HORIZONTAL";
+};
+
+type SliderMediaItem = {
+  id: string;
+  title: string;
+  description?: string | null;
+  url?: string;
+  kind: "video" | "thumb";
 };
 
 function getYoutubeEmbed(url: string) {
@@ -18,28 +25,6 @@ function getYoutubeEmbed(url: string) {
   const shortUrl = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/)?.[1];
   if (shortUrl) return `https://www.youtube-nocookie.com/embed/${shortUrl}?autoplay=0&rel=0`;
   return url;
-}
-
-function WorkCard({ project, vertical }: { project: Project; vertical: boolean }) {
-  return (
-    <article className="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
-      <div
-        className={
-          vertical
-            ? "flex justify-center border-b border-[var(--color-border)] bg-[var(--color-accent)]/40 px-4 py-5"
-            : "border-b border-[var(--color-border)] p-3"
-        }
-      >
-        <LazyYouTube url={getYoutubeEmbed(project.videoUrl)} title={project.title} portrait={vertical} />
-      </div>
-      <div className="p-4">
-        <h4 className="mb-2 text-lg font-semibold text-[var(--color-primary)]">{project.title}</h4>
-        <p className="text-sm leading-relaxed text-[var(--color-text)]">
-          {project.description || "Clip editado para retención y claridad visual."}
-        </p>
-      </div>
-    </article>
-  );
 }
 
 export async function Work() {
@@ -65,9 +50,23 @@ export async function Work() {
 
   const verticalProjects = projects.filter((p) => p.format === "VERTICAL");
   const horizontalProjects = projects.filter((p) => p.format === "HORIZONTAL");
+  const verticalItems: SliderMediaItem[] = verticalProjects.map((project) => ({
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    url: getYoutubeEmbed(project.videoUrl),
+    kind: "video",
+  }));
+  const horizontalItems: SliderMediaItem[] = horizontalProjects.map((project) => ({
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    url: getYoutubeEmbed(project.videoUrl),
+    kind: "video",
+  }));
 
   return (
-    <section id="prueba" className="py-14 md:py-20 lg:py-24" aria-labelledby="work-title">
+    <section id="prueba" className="py-10 md:py-14 lg:py-16" aria-labelledby="work-title">
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <h2
           id="work-title"
@@ -94,27 +93,7 @@ export async function Work() {
 
         {!dbError && projects.length > 0 && (
           <>
-            <h3 id="vertical-pack" className="mb-6 mt-10 text-2xl font-semibold text-[var(--color-primary)]">
-              Vertical · Retención en el primer segundo
-            </h3>
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {verticalProjects.map((project, index) => (
-                <Reveal key={project.id} delay={index * 0.05}>
-                  <WorkCard project={project} vertical />
-                </Reveal>
-              ))}
-            </div>
-
-            <h3 id="horizontal-pack" className="mb-6 mt-10 text-2xl font-semibold text-[var(--color-primary)]">
-              Horizontal · Watch time que se sostiene
-            </h3>
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {horizontalProjects.map((project, index) => (
-                <Reveal key={project.id} delay={index * 0.05}>
-                  <WorkCard project={project} vertical={false} />
-                </Reveal>
-              ))}
-            </div>
+            <WorkSliders verticalItems={verticalItems} horizontalItems={horizontalItems} />
           </>
         )}
       </div>
@@ -124,7 +103,7 @@ export async function Work() {
 
 export function WorkSkeleton() {
   return (
-    <section id="prueba" className="py-14 md:py-20 lg:py-24" aria-labelledby="work-title">
+    <section id="prueba" className="py-10 md:py-14 lg:py-16" aria-labelledby="work-title">
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <h2
           id="work-title"
