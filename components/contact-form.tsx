@@ -18,7 +18,7 @@ function SubmitButton() {
       disabled={pending}
       className="inline-flex items-center justify-center rounded-full border border-indigo-500 bg-indigo-500 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-70"
     >
-      {pending ? "Enviando..." : "Enviar mensaje"}
+      {pending ? "Enviando..." : "Pedir propuesta"}
     </button>
   );
 }
@@ -91,7 +91,7 @@ export function ContactForm() {
 
         <fieldset className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
           <legend className="px-1 text-sm font-semibold text-[var(--color-text)]">
-            Tipo de servicio (obligatorio)
+            Qué quieres escalar (obligatorio)
           </legend>
           <div className="mt-2 grid gap-2 sm:grid-cols-2">
             {serviceOptions.map((option) => (

@@ -2,16 +2,16 @@ import { Reveal } from "@/components/reveal";
 
 const steps = [
   {
-    title: "Pedido recibido",
-    detail: "Confirmo material, objetivo y fecha estimada en el mismo hilo.",
+    title: "Brief validado",
+    detail: "Confirmo material, objetivo de performance y ventana de entrega en el mismo hilo. Cero ambigüedad.",
   },
   {
-    title: "Edicion en curso",
-    detail: "Recibes avance con estado: montaje, ajustes y versión de revisión.",
+    title: "Montaje con intención",
+    detail: "Avances con estado claro: estructura, ritmo, sonido y revisión — siempre sabes qué queda por pulir.",
   },
   {
-    title: "Entrega y cierre",
-    detail: "Compartición final por Drive/SwissTransfer + checklist de publicación.",
+    title: "Entrega y publicación",
+    detail: "Archivo final por enlace privado + checklist rápido para maximizar retención al subir.",
   },
 ];
 
@@ -23,11 +23,11 @@ export function TrackingReport() {
           id="tracking-title"
           className="mb-4 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
         >
-          Tracking de pedido
+          Transparencia total, cero ansiedad
         </h2>
-        <p className="mb-8 max-w-3xl text-[var(--color-text)]">
-          Cada proyecto incluye un informe de edición para que sepas en todo momento en qué estado está tu contenido y
-          cuándo se entrega.
+        <p className="mb-8 max-w-3xl font-medium leading-relaxed text-[var(--color-text)]">
+          Ventaja operativa: cada proyecto incluye seguimiento explícito. Sabes en qué fase está el clip, cuándo toca tu
+          feedback y cuándo cierra — para que puedas planificar contenido sin improvisar plazos.
         </p>
 
         <div className="grid gap-5 md:grid-cols-3">

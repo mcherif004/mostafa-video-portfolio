@@ -6,11 +6,11 @@ export function Conditions() {
           id="condiciones-title"
           className="mb-6 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
         >
-          Condiciones
+          Reglas claras, proyecto sin fricción
         </h2>
         <details className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_10px_24px_rgba(0,0,0,0.10)]">
           <summary className="cursor-pointer px-5 py-4 text-lg font-semibold text-[var(--color-primary)]">
-            Ver condiciones de trabajo
+            Ver condiciones completas
           </summary>
           <div className="border-t border-[var(--color-border)] p-5">
             <ul className="space-y-3 text-sm leading-relaxed text-[var(--color-text)]">

@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -30,30 +30,39 @@ export function Hero() {
               />
             </div>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-secondary)]">
-              Mostafa Cherif · Edicion para creadores
+              Mostafa Cherif · Edición orientada a retención y crecimiento
             </p>
             <h1
               id="hero-title"
               className="mb-4 text-[clamp(1.7rem,5.4vw,3.15rem)] font-bold leading-[1.12] text-[var(--color-primary)]"
             >
-              Tus videos no fallan por calidad. Fallan por retencion.
+              El algoritmo no perdona el aburrimiento. Tu audiencia tampoco.
             </h1>
-            <p className="mb-6 text-[clamp(1rem,2.6vw,1.15rem)] font-semibold text-[var(--color-text)]">
-              Edito contenido para que la gente no se vaya.
-              <br /> Mas retencion = mas alcance = mas crecimiento.
+            <p className="mb-6 text-[clamp(1rem,2.6vw,1.15rem)] font-semibold leading-relaxed text-[var(--color-text)]">
+              <span className="block text-[var(--color-secondary)]">
+                Problema: publicas mucho y la gente se va en segundos.
+              </span>
+              <span className="mt-2 block">
+                Agitación: sin hooks magnéticos, ritmo y claridad visual, pierdes retención, CTR y tiempo de vida del
+                clip.
+              </span>
+              <span className="mt-2 block">
+                Solución: edición pensada para que el espectador se quede, haga clic y comparta — y tú recuperes horas de
+                producción cada semana.
+              </span>
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#prueba"
                 className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-secondary)]"
               >
-                Ver como trabajo
+                Ver clips con intención
               </a>
               <a
                 href="#contacto"
                 className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition hover:-translate-y-0.5 hover:bg-[color:var(--color-primary)]/10"
               >
-                Quiero mejorar mi contenido
+                Quiero escalar mi canal
               </a>
             </div>
           </motion.div>
@@ -65,10 +74,8 @@ export function Hero() {
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
           >
-            <div
-              className="absolute inset-[-45%] bg-[radial-gradient(circle,rgba(0,123,255,0.22),transparent_55%)] dark:bg-[radial-gradient(circle,rgba(255,77,77,0.20),transparent_55%)]"
-            />
-            <div className="relative z-10" aria-label="Herramientas que uso">
+            <div className="absolute inset-[-45%] bg-[radial-gradient(circle,rgba(0,123,255,0.22),transparent_55%)] dark:bg-[radial-gradient(circle,rgba(255,77,77,0.20),transparent_55%)]" />
+            <div className="relative z-10" aria-label="Stack creativo">
               <div className="flex items-center justify-center gap-2">
                 <Image
                   src="/assets/icons/adobe-after-effects-logo-0.png"
@@ -94,13 +101,13 @@ export function Hero() {
               </div>
             </div>
             <p className="relative z-10 w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
-              Retencion
+              Retención real
             </p>
             <p className="relative z-10 ml-auto w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
-              Alcance
+              CTR que vende
             </p>
             <p className="relative z-10 w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
-              Crecimiento
+              Audiencia en crecimiento
             </p>
           </motion.div>
         </div>

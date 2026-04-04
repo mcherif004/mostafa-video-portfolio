@@ -35,7 +35,7 @@ function WorkCard({ project, vertical }: { project: Project; vertical: boolean }
       <div className="p-4">
         <h4 className="mb-2 text-lg font-semibold text-[var(--color-primary)]">{project.title}</h4>
         <p className="text-sm leading-relaxed text-[var(--color-text)]">
-          {project.description || "Proyecto de video de alto rendimiento."}
+          {project.description || "Clip editado para retención y claridad visual."}
         </p>
       </div>
     </article>
@@ -71,10 +71,14 @@ export async function Work() {
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <h2
           id="work-title"
-          className="mb-7 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+          className="mb-3 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
         >
-          Trabajo
+          Prueba social, no promesas vacías
         </h2>
+        <p className="mb-7 max-w-3xl text-sm font-medium leading-relaxed text-[var(--color-text)] md:text-base">
+          Esto es montaje con criterio: ritmo, claridad y picos donde el algoritmo espera retención. Compara con tu
+          último upload y mira dónde se va la gente.
+        </p>
 
         {dbError && (
           <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">
@@ -91,7 +95,7 @@ export async function Work() {
         {!dbError && projects.length > 0 && (
           <>
             <h3 id="vertical-pack" className="mb-6 mt-10 text-2xl font-semibold text-[var(--color-primary)]">
-              Vertical · Ejemplos
+              Vertical · Retención en el primer segundo
             </h3>
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {verticalProjects.map((project, index) => (
@@ -102,7 +106,7 @@ export async function Work() {
             </div>
 
             <h3 id="horizontal-pack" className="mb-6 mt-10 text-2xl font-semibold text-[var(--color-primary)]">
-              Horizontal · Ejemplos
+              Horizontal · Watch time que se sostiene
             </h3>
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {horizontalProjects.map((project, index) => (
@@ -126,7 +130,7 @@ export function WorkSkeleton() {
           id="work-title"
           className="mb-7 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
         >
-          Trabajo
+          Prueba social
         </h2>
         <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
           Cargando proyectos...

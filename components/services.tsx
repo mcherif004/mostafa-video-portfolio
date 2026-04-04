@@ -6,38 +6,38 @@ export function Services() {
   const items = [
     {
       id: "vertical",
-      title: "Vertical",
+      title: "Verticales que enganchan",
       cta: "#vertical-pack",
-      ctaLabel: "Ver Vertical",
+      ctaLabel: "Ver verticales",
       bullets: [
-        "Hook fuerte en los primeros segundos",
-        "Ritmo agil para retencion y viralidad",
-        "Montaje para Shorts, Reels y TikTok",
-        "Entrega lista para publicar",
+        "Abres con un hook que obliga a quedarse: menos scroll, más minutos vistos.",
+        "Ritmo cortado para el algoritmo de Shorts, Reels y TikTok — no para ‘verse bonito’.",
+        "Subtítulos y picos visuales donde el ojo ya está mirando: más retención por frame.",
+        "Entregas listas para publicar: tú grabas; el tiempo de edición vuelve a tu calendario.",
       ],
     },
     {
       id: "youtube",
-      title: "Horizontal (YouTube)",
+      title: "Largos que sostienen la atención",
       cta: "#horizontal-pack",
-      ctaLabel: "Ver Horizontal",
+      ctaLabel: "Ver largos",
       bullets: [
-        "Estructura narrativa clara de inicio a cierre",
-        "Ritmo estable para mantener atencion",
-        "Audio y continuidad visual bien integrados",
-        "Montaje preparado para YouTube largo",
+        "Estructura narrativa que evita la fuga en el minuto dos: más watch time, más recomendación.",
+        "Cortes y silencios trabajados para que el vídeo ‘respire’ sin perder tensión.",
+        "Audio limpio y continuidad visual: credibilidad instantánea y menos abandono.",
+        "Montaje preparado para YouTube: capítulos mentales claros y payoff al final.",
       ],
     },
     {
       id: "miniaturas",
-      title: "Miniaturas",
+      title: "Miniaturas con dientes",
       cta: "#pricing",
-      ctaLabel: "Ver Precios",
+      ctaLabel: "Ver inversión",
       bullets: [
-        "Diseno enfocado a CTR",
-        "Jerarquia visual clara en movil y desktop",
-        "Consistencia con tu marca y estilo",
-        "Pensadas para vender el video en un vistazo",
+        "Diseño con una sola promesa visual: más clics sin clickbait barato.",
+        "Jerarquía legible en móvil: el 70% de tus impresiones decide en pantalla pequeña.",
+        "Coherencia de marca para que te reconozcan en el feed antes de leer el título.",
+        "Cada pixel empuja al CTR: menos esfuerzo promocional por vídeo publicado.",
       ],
     },
   ];
@@ -51,10 +51,14 @@ export function Services() {
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <h2
           id="servicios-title"
-          className="mb-7 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+          className="mb-3 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
         >
-          Servicios
+          Lo que hago por tu canal
         </h2>
+        <p className="mb-7 max-w-3xl text-sm font-medium leading-relaxed text-[var(--color-text)] md:text-base">
+          No vendo ‘edición’. Vendo decisiones de montaje que suben retención, CTR y crecimiento de audiencia — y te
+          devuelven horas que hoy pierdes en timeline.
+        </p>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {items.map((item, index) => (
             <motion.article
