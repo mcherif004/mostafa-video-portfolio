@@ -39,11 +39,11 @@ export function SiteHeader() {
   return (
     <header
       id="site-header"
-      className={`sticky top-0 z-50 border-b border-white/10 bg-black/85 backdrop-blur-md transition-all ${
+      className={`sticky top-0 z-50 border-b border-white/10 bg-[var(--color-nav-bg)]/90 backdrop-blur-md transition-all ${
         isScrolled ? "shadow-[0_10px_28px_rgba(0,0,0,0.35)]" : "shadow-[0_4px_16px_rgba(0,0,0,0.2)]"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+      <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <div className="grid min-h-14 grid-cols-[1fr_auto_auto] items-center gap-3 py-2 md:min-h-16 md:grid-cols-[auto_1fr_auto]">
           <a href="#hero" aria-label="Inicio" className="inline-flex items-center">
             <Image
@@ -65,7 +65,7 @@ export function SiteHeader() {
               <li>
                 <a
                   href="#hero"
-                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
+                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Inicio
@@ -74,7 +74,7 @@ export function SiteHeader() {
               <li>
                 <a
                   href="#servicios"
-                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
+                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Servicios
@@ -83,7 +83,7 @@ export function SiteHeader() {
               <li>
                 <a
                   href="#prueba"
-                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
+                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Trabajo
@@ -92,7 +92,7 @@ export function SiteHeader() {
               <li>
                 <a
                   href="#pricing"
-                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
+                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Precios
@@ -101,7 +101,7 @@ export function SiteHeader() {
               <li>
                 <a
                   href="#contacto"
-                  className="rounded-full border border-white/25 bg-white/15 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-[#007bff]"
+                  className="rounded-full border border-white/25 bg-white/15 px-4 py-2 text-center text-sm font-semibold text-[var(--color-nav-text)] transition hover:bg-[var(--color-primary)] hover:text-white"
                   onClick={() => setMenuOpen(false)}
                 >
                   Contacto
@@ -110,7 +110,7 @@ export function SiteHeader() {
               <li>
                 <a
                   href="#condiciones"
-                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
+                  className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Condiciones
@@ -125,7 +125,7 @@ export function SiteHeader() {
               id="theme-toggle"
               aria-label="Cambiar tema claro u oscuro"
               onClick={toggleTheme}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[var(--color-nav-text)] transition hover:bg-white/20"
             >
               <span aria-hidden="true" className="text-lg">
                 {darkMode ? "🌙" : "☀️"}
@@ -136,7 +136,7 @@ export function SiteHeader() {
           <button
             type="button"
             id="mobile-menu-toggle"
-            className="flex h-10 w-10 items-center justify-center justify-self-center rounded-full text-white md:hidden"
+            className="flex h-10 w-10 items-center justify-center justify-self-center rounded-full text-[var(--color-nav-text)] md:hidden"
             aria-expanded={menuOpen}
             aria-controls="nav-menu"
             aria-label={menuOpen ? "Cerrar menu de navegacion" : "Abrir menu de navegacion"}

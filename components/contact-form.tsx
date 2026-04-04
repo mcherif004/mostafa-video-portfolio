@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { motion } from "framer-motion";
 import {
   initialContactFormState,
   submitContact,
@@ -34,13 +35,17 @@ export function ContactForm() {
   );
 
   return (
-    <form
+    <motion.form
       action={formAction}
-      className="rounded-2xl border border-blue-100 bg-white p-6 shadow-[0_10px_24px_rgba(0,0,0,0.10)] dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
+      className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-[0_10px_24px_rgba(0,0,0,0.10)]"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
     >
       <div className="grid gap-4">
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-semibold text-slate-700 dark:text-zinc-200">
+          <label htmlFor="name" className="mb-1 block text-sm font-semibold text-[var(--color-text)]">
             Nombre
           </label>
           <input
@@ -48,38 +53,38 @@ export function ContactForm() {
             name="name"
             type="text"
             required
-            className="w-full rounded-xl border border-blue-100 bg-slate-50 px-3 py-2 text-slate-900 outline-none transition focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-red-400"
+            className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
           />
           <FieldError errors={state.errors?.name} />
         </div>
 
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-semibold text-slate-700 dark:text-zinc-200">
+          <label htmlFor="email" className="mb-1 block text-sm font-semibold text-[var(--color-text)]">
             Email
           </label>
           <input
             id="email"
             name="email"
             type="email"
-            className="w-full rounded-xl border border-blue-100 bg-slate-50 px-3 py-2 text-slate-900 outline-none transition focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-red-400"
+            className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
           />
           <FieldError errors={state.errors?.email} />
         </div>
 
         <div>
-          <label htmlFor="contact" className="mb-1 block text-sm font-semibold text-slate-700 dark:text-zinc-200">
+          <label htmlFor="contact" className="mb-1 block text-sm font-semibold text-[var(--color-text)]">
             Discord / WhatsApp (opcional)
           </label>
           <input
             id="contact"
             name="contact"
             type="text"
-            className="w-full rounded-xl border border-blue-100 bg-slate-50 px-3 py-2 text-slate-900 outline-none transition focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-red-400"
+            className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
           />
         </div>
 
         <div>
-          <label htmlFor="message" className="mb-1 block text-sm font-semibold text-slate-700 dark:text-zinc-200">
+          <label htmlFor="message" className="mb-1 block text-sm font-semibold text-[var(--color-text)]">
             Mensaje
           </label>
           <textarea
@@ -87,7 +92,7 @@ export function ContactForm() {
             name="message"
             required
             rows={5}
-            className="w-full resize-y rounded-xl border border-blue-100 bg-slate-50 px-3 py-2 text-slate-900 outline-none transition focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-red-400"
+            className="w-full resize-y rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]"
           />
           <FieldError errors={state.errors?.message} />
         </div>
@@ -102,6 +107,6 @@ export function ContactForm() {
           </p>
         )}
       </div>
-    </form>
+    </motion.form>
   );
 }

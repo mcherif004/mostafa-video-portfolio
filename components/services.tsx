@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export function Services() {
   const items = [
     {
@@ -42,36 +46,47 @@ export function Services() {
     <section
       id="servicios"
       aria-labelledby="servicios-title"
-      className="bg-blue-50/70 py-16 dark:bg-zinc-900/70 md:py-24"
+      className="bg-[var(--color-accent)]/75 py-14 md:py-20 lg:py-24"
     >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 id="servicios-title" className="mb-8 text-3xl font-bold text-blue-700 dark:text-red-400 md:text-4xl">
+      <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
+        <h2
+          id="servicios-title"
+          className="mb-7 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+        >
           Servicios
         </h2>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => (
-            <article
+          {items.map((item, index) => (
+            <motion.article
               key={item.id}
               id={item.id}
-              className="rounded-2xl border border-blue-100 bg-white p-6 shadow-[0_10px_24px_rgba(0,0,0,0.10)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.16)] dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
+              className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 shadow-[0_10px_24px_rgba(0,0,0,0.10)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.16)] md:p-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: index * 0.06, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.2 }}
+              whileHover={{ y: -6 }}
             >
-              <h3 className="mb-4 border-b border-blue-100 pb-2 text-xl font-semibold text-blue-700 dark:border-zinc-700 dark:text-red-400">
+              <h3 className="mb-4 border-b border-[var(--color-border)] pb-2 text-xl font-semibold text-[var(--color-primary)]">
                 {item.title}
               </h3>
-              <ul className="mb-5 space-y-2 text-sm font-medium text-slate-700 dark:text-zinc-200">
+              <ul className="mb-5 space-y-2 text-sm font-medium text-[var(--color-text)]">
                 {item.bullets.map((bullet) => (
-                  <li key={bullet} className="pl-5 before:relative before:-left-5 before:mr-[-1.2rem] before:text-blue-600 before:content-['→'] dark:before:text-red-400">
+                  <li
+                    key={bullet}
+                    className="pl-5 before:relative before:-left-5 before:mr-[-1.2rem] before:text-[var(--color-primary)] before:content-['→']"
+                  >
                     {bullet}
                   </li>
                 ))}
               </ul>
               <a
                 href={item.cta}
-                className="inline-flex w-full items-center justify-center rounded-full border border-blue-600 px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 dark:border-red-500 dark:text-red-400 dark:hover:bg-red-950/40"
+                className="inline-flex w-full items-center justify-center rounded-full border border-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition hover:bg-[color:var(--color-primary)]/10"
               >
                 {item.ctaLabel}
               </a>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

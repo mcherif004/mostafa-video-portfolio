@@ -1,16 +1,19 @@
 export function Conditions() {
   return (
-    <section id="condiciones" className="bg-blue-50/70 py-16 dark:bg-zinc-900/70 md:py-24" aria-labelledby="condiciones-title">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 id="condiciones-title" className="mb-6 text-3xl font-bold text-blue-700 dark:text-red-400 md:text-4xl">
+    <section id="condiciones" className="bg-[var(--color-accent)]/75 py-14 md:py-20 lg:py-24" aria-labelledby="condiciones-title">
+      <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
+        <h2
+          id="condiciones-title"
+          className="mb-6 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+        >
           Condiciones
         </h2>
-        <details className="rounded-2xl border border-blue-100 bg-white shadow-[0_10px_24px_rgba(0,0,0,0.10)] dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-[0_10px_24px_rgba(0,0,0,0.35)]">
-          <summary className="cursor-pointer px-5 py-4 text-lg font-semibold text-blue-700 dark:text-red-400">
+        <details className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_10px_24px_rgba(0,0,0,0.10)]">
+          <summary className="cursor-pointer px-5 py-4 text-lg font-semibold text-[var(--color-primary)]">
             Ver condiciones de trabajo
           </summary>
-          <div className="border-t border-blue-100 p-5 dark:border-zinc-800">
-            <ul className="space-y-3 text-sm leading-relaxed text-slate-700 dark:text-zinc-200">
+          <div className="border-t border-[var(--color-border)] p-5">
+            <ul className="space-y-3 text-sm leading-relaxed text-[var(--color-text)]">
               <li>
                 <strong>Como enviar la informacion:</strong> envia formato, duracion final, objetivo del video y plazo.
               </li>

@@ -1,7 +1,7 @@
 export function SiteFooter() {
   return (
-    <footer className="bg-[#00274d] py-12 text-center text-sm text-white dark:bg-black">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <footer className="bg-[var(--color-footer-bg)] py-12 text-center text-sm text-[var(--color-footer-text)]">
+      <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <p className="mx-auto mb-7 max-w-2xl text-base leading-relaxed">
           <strong>Cupo limitado:</strong> priorizo pocos proyectos para dar mas foco a cada entrega.
         </p>

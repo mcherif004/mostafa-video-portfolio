@@ -8,9 +8,9 @@ export function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="bg-[radial-gradient(circle_at_20%_20%,rgba(0,123,255,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(0,86,179,0.10),transparent_50%)] py-16 md:py-24 dark:bg-[radial-gradient(circle_at_20%_20%,rgba(255,77,77,0.10),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(204,51,51,0.08),transparent_50%)]"
+      className="bg-[radial-gradient(circle_at_20%_20%,rgba(0,123,255,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(0,86,179,0.10),transparent_50%)] py-14 md:py-20 lg:py-24 dark:bg-[radial-gradient(circle_at_20%_20%,rgba(255,77,77,0.10),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(204,51,51,0.08),transparent_50%)]"
     >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+      <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.62fr]">
           <motion.div
             className="max-w-3xl"
@@ -19,33 +19,36 @@ export function Hero() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
           >
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-blue-700 dark:text-red-400">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-secondary)]">
               Mostafa Cherif · Edicion para creadores
             </p>
-            <h1 id="hero-title" className="mb-4 text-3xl font-bold leading-tight text-blue-700 md:text-5xl">
+            <h1
+              id="hero-title"
+              className="mb-4 text-[clamp(1.7rem,5.4vw,3.15rem)] font-bold leading-[1.12] text-[var(--color-primary)]"
+            >
               Tus videos no fallan por calidad. Fallan por retencion.
             </h1>
-            <p className="mb-6 text-lg font-semibold text-slate-800 dark:text-zinc-200">
+            <p className="mb-6 text-[clamp(1rem,2.6vw,1.15rem)] font-semibold text-[var(--color-text)]">
               Edito contenido para que la gente no se vaya.
               <br /> Mas retencion = mas alcance = mas crecimiento.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#prueba"
-                className="inline-flex items-center justify-center rounded-full border border-blue-600 bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-blue-700"
+                className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-secondary)]"
               >
                 Ver como trabajo
               </a>
               <a
                 href="#contacto"
-                className="inline-flex items-center justify-center rounded-full border border-blue-600 px-6 py-2.5 text-sm font-semibold text-blue-700 transition hover:-translate-y-0.5 hover:bg-blue-50 dark:border-red-500 dark:text-red-400 dark:hover:bg-red-950/40"
+                className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition hover:-translate-y-0.5 hover:bg-[color:var(--color-primary)]/10"
               >
                 Quiero mejorar mi contenido
               </a>
             </div>
           </motion.div>
           <motion.div
-            className="relative flex min-h-[280px] flex-col justify-center gap-3 overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.12)] dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-900"
+            className="relative flex min-h-[250px] flex-col justify-center gap-3 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-card)] to-[var(--color-accent)] p-5 shadow-[0_10px_24px_rgba(0,0,0,0.12)] md:min-h-[280px] md:p-6"
             aria-hidden="true"
             initial={{ opacity: 0, scale: 0.97 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -83,13 +86,13 @@ export function Hero() {
                 />
               </div>
             </div>
-            <p className="relative z-10 w-fit rounded-full border border-blue-100 bg-blue-100/70 px-4 py-2 text-xs font-bold uppercase tracking-wide text-blue-700 dark:border-zinc-700 dark:bg-red-950/40 dark:text-red-400">
+            <p className="relative z-10 w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
               Retencion
             </p>
-            <p className="relative z-10 ml-auto w-fit rounded-full border border-blue-100 bg-blue-100/70 px-4 py-2 text-xs font-bold uppercase tracking-wide text-blue-700 dark:border-zinc-700 dark:bg-red-950/40 dark:text-red-400">
+            <p className="relative z-10 ml-auto w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
               Alcance
             </p>
-            <p className="relative z-10 w-fit rounded-full border border-blue-100 bg-blue-100/70 px-4 py-2 text-xs font-bold uppercase tracking-wide text-blue-700 dark:border-zinc-700 dark:bg-red-950/40 dark:text-red-400">
+            <p className="relative z-10 w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
               Crecimiento
             </p>
           </motion.div>

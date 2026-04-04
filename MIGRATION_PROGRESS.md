@@ -10,8 +10,17 @@
 - [x] Corregir desalineacion de variable Supabase en middleware
 - [x] Verificar persistencia de contacto con `Lead` (Prisma)
 - [x] Ejecutar `npm run build` sin errores de TypeScript
+- [x] Ajustar breakpoints y escalado tipografico en Hero, Services y Work
+- [x] Centralizar colores de marca originales en variables CSS y Tailwind config
+- [x] Pulir micro-interacciones con Framer Motion (entradas y hover)
+- [x] Completar SEO metadata (title, description, OG, Twitter, icon)
+- [x] Ejecutar prueba E2E de contacto con insercion real en `Lead`
 
 ## Notas
 
 - Objetivo de calidad: Home funcional y visualmente superior a la version HTML estatica.
 - Regla de trabajo: commit por bloque funcional terminado.
+- Prueba E2E ejecutada con `scripts/e2e-lead-test.ts`:
+  - `action_status success`
+  - `lead_created true`
+  - limpieza de prueba: `lead_cleanup deleted`

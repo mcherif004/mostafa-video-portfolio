@@ -18,17 +18,39 @@ export const metadata: Metadata = {
   title: "Mostafa Cherif | Edicion YouTube, Shorts y miniaturas",
   description:
     "Edicion profesional para YouTube, Shorts, Reels y miniaturas. Enfoque en retencion, ritmo narrativo y crecimiento del canal.",
-  metadataBase: new URL("https://eeolyrudoorodagitmac.supabase.co"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  keywords: [
+    "edicion de video",
+    "edicion youtube",
+    "shorts",
+    "reels",
+    "miniaturas",
+    "retencion",
+  ],
+  icons: {
+    icon: "/assets/light.webp",
+    apple: "/assets/light.webp",
+  },
   openGraph: {
     title: "Mostafa Cherif | Edicion de alto rendimiento",
     description: "Edicion para YouTube, formato vertical y miniaturas orientada a retencion.",
     type: "website",
     locale: "es_ES",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+    images: [
+      {
+        url: "/assets/light.webp",
+        width: 1200,
+        height: 630,
+        alt: "Mostafa Cherif - Edicion de alto rendimiento",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mostafa Cherif | Edicion de alto rendimiento",
     description: "Edicion para YouTube, vertical y miniaturas orientada a retencion.",
+    images: ["/assets/light.webp"],
   },
 };
 
@@ -42,7 +64,7 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full bg-slate-50 text-slate-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
+      <body className="min-h-full bg-[var(--color-bg)] text-[var(--color-text)] transition-colors">
         <SiteHeader />
         {children}
         <SiteFooter />
