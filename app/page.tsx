@@ -12,6 +12,9 @@ const ClientsMarquee = dynamicImport(() =>
   import("@/components/clients-marquee").then((mod) => mod.ClientsMarquee)
 );
 const Conditions = dynamicImport(() => import("@/components/conditions").then((mod) => mod.Conditions));
+const TrackingReport = dynamicImport(() =>
+  import("@/components/tracking-report").then((mod) => mod.TrackingReport)
+);
 
 export default function Home() {
   return (
@@ -24,6 +27,7 @@ export default function Home() {
       <Suspense fallback={<PricingSkeleton />}>
         <Pricing />
       </Suspense>
+      <TrackingReport />
       <Contact />
       <ClientsMarquee />
       <Conditions />

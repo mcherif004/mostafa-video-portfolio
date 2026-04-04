@@ -18,7 +18,16 @@ export function Conditions() {
                 <strong>Como enviar la informacion:</strong> envia formato, duracion final, objetivo del video y plazo.
               </li>
               <li>
-                <strong>Como enviar material:</strong> comparte enlaces organizados y marca tomas clave.
+                <strong>Como enviar material:</strong> comparte enlaces organizados por carpetas (A-roll, B-roll,
+                musica, referencias) y marca tomas clave.
+              </li>
+              <li>
+                <strong>Entrega de archivos:</strong> la entrega final se realiza por enlace privado de Drive o
+                SwissTransfer, según peso y urgencia del proyecto.
+              </li>
+              <li>
+                <strong>Tiempos de entrega:</strong> se calculan desde la recepción completa del material y de un brief
+                validado. Si falta material, el plazo se pausa automáticamente.
               </li>
               <li>
                 <strong>Vertical:</strong> limites por plan en duracion final, material y revisiones.
@@ -27,7 +36,23 @@ export function Conditions() {
                 <strong>Horizontal:</strong> limites por plan y revisiones con extras cotizados aparte.
               </li>
               <li>
+                <strong>Miniaturas y packs:</strong> cada entrega sigue la línea visual aprobada; rediseños de concepto
+                completo se presupuestan como nueva pieza.
+              </li>
+              <li>
                 <strong>Pago y reserva:</strong> 50% por adelantado y resto al cerrar entrega.
+              </li>
+              <li>
+                <strong>Uso y propiedad:</strong> el cliente recibe derechos de uso comercial de la versión final
+                entregada. Los archivos fuente editables se entregan solo si se acuerda por escrito.
+              </li>
+              <li>
+                <strong>Vacíos legales cubiertos:</strong> el cliente garantiza que tiene derechos del material enviado
+                (audio/video/imágenes). No se asume responsabilidad por reclamaciones de copyright de terceros.
+              </li>
+              <li>
+                <strong>Limitación de responsabilidad:</strong> no se garantizan resultados de alcance/ventas, ya que
+                dependen de múltiples factores fuera del proceso de edición.
               </li>
             </ul>
           </div>
