@@ -23,6 +23,10 @@
 # misc
 .DS_Store
 *.pem
+*.tmp
+*.bak
+*.old
+*.orig
 .agents/
 skills-lock.json
 
