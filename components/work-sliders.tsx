@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { LazyYouTube } from "@/components/lazy-youtube";
 import { useAutoplaySlider } from "@/hooks/use-autoplay-slider";
 
@@ -12,13 +13,19 @@ type MediaItem = {
   kind: "video" | "thumb";
 };
 
-function chunkPairs<T>(arr: T[]): T[][] {
+function chunkOf<T>(arr: T[], size: number): T[][] {
   const out: T[][] = [];
-  for (let i = 0; i < arr.length; i += 2) out.push(arr.slice(i, i + 2));
+  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
   return out;
 }
 
 type BlockVariant = "vertical" | "horizontal" | "thumbs";
+
+const slideVariants = {
+  enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+};
 
 function MediaBlock({
   items,
@@ -34,16 +41,22 @@ function MediaBlock({
   const isPortrait = variant === "vertical";
   const isThumbs = variant === "thumbs";
 
-  const pages = isThumbs ? chunkPairs(items) : items.map((i) => [i]);
+  const pages = isThumbs ? chunkOf(items, 3) : items.map((i) => [i]);
   const { index: pageIdx, setIndex: setPageIdx, setPaused } = useAutoplaySlider(pages.length, autoMs);
 
   const currentPage = pages[pageIdx] ?? pages[0] ?? [];
   const currentItem = currentPage[0];
 
-  const goPrev = () => setPageIdx((i) => (i - 1 + pages.length) % pages.length);
-  const goNext = () => setPageIdx((i) => (i + 1) % pages.length);
+  const navigate = (dir: 1 | -1) => {
+    setPaused(true);
+    setPageIdx((i) => (i + dir + pages.length) % pages.length);
+    setTimeout(() => setPaused(false), 200);
+  };
 
   const mobileAspect = isPortrait ? "aspect-[9/16]" : isThumbs ? "aspect-[4/3]" : "aspect-video";
+
+  const thumbCols =
+    currentPage.length === 1 ? "grid-cols-1" : currentPage.length === 2 ? "grid-cols-2" : "grid-cols-3";
 
   return (
     <article
@@ -51,53 +64,66 @@ function MediaBlock({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* ── MEDIA: sin controles encima ── */}
+      {/* ── MEDIA ── */}
       <div
         className={`relative w-full overflow-hidden rounded-2xl bg-black ${mobileAspect} lg:aspect-auto lg:min-h-0 lg:flex-1`}
       >
-        {isThumbs ? (
-          <div
-            className={`absolute inset-0 grid gap-2 p-2 ${currentPage.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}
+        <AnimatePresence initial={false} custom={1} mode="wait">
+          <motion.div
+            key={pageIdx}
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute inset-0"
           >
-            {currentPage.map((item) => (
-              <div key={item.id} className="relative overflow-hidden rounded-xl bg-neutral-200">
-                {item.url ? (
-                  <Image
-                    src={item.url}
-                    fill
-                    className="object-cover"
-                    alt={item.title}
-                    unoptimized
-                    sizes="(max-width: 1024px) 45vw, 25vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-200 to-neutral-300 p-2">
-                    <span className="text-center text-[11px] font-semibold text-neutral-500">{item.title}</span>
+            {isThumbs ? (
+              <div className={`grid h-full gap-2 p-2 ${thumbCols}`}>
+                {currentPage.map((item) => (
+                  <div key={item.id} className="relative overflow-hidden rounded-xl bg-neutral-200">
+                    {item.url ? (
+                      <Image
+                        src={item.url}
+                        fill
+                        className="object-cover"
+                        alt={item.title}
+                        unoptimized
+                        sizes="(max-width: 1024px) 30vw, 18vw"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-300 p-2">
+                        <span className="text-center text-[10px] font-semibold leading-snug text-neutral-500">
+                          {item.title}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
-        ) : currentItem?.kind === "video" && currentItem?.url ? (
-          <LazyYouTube
-            url={currentItem.url}
-            title={currentItem.title}
-            portrait={isPortrait}
-            fillHeight
-            autoplayMuted
-          />
-        ) : currentItem?.url ? (
-          <Image
-            src={currentItem.url}
-            fill
-            className="object-cover"
-            alt={currentItem.title}
-            unoptimized
-            sizes="(max-width: 1024px) 90vw, 55vw"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-neutral-200" />
-        )}
+            ) : currentItem?.kind === "video" && currentItem?.url ? (
+              <LazyYouTube
+                url={currentItem.url}
+                title={currentItem.title}
+                portrait={isPortrait}
+                fillHeight
+                autoplayMuted
+              />
+            ) : currentItem?.url ? (
+              <Image
+                src={currentItem.url}
+                fill
+                className="object-cover"
+                alt={currentItem.title ?? ""}
+                unoptimized
+                sizes="(max-width: 1024px) 90vw, 55vw"
+              />
+            ) : (
+              <div className="h-full w-full bg-neutral-200" />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* ── TEXTO ── */}
@@ -112,14 +138,14 @@ function MediaBlock({
         ) : null}
       </div>
 
-      {/* ── CONTROLES: siempre debajo del texto, nunca sobre la imagen ── */}
+      {/* ── CONTROLES: debajo del texto, nunca sobre la imagen ── */}
       <div className="mt-2.5 flex shrink-0 items-center justify-between gap-2">
         {pages.length > 1 ? (
           <>
             <button
               type="button"
-              onClick={goPrev}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/60 bg-[var(--color-card)] text-lg font-bold text-[var(--color-primary)] transition hover:border-black"
+              onClick={() => navigate(-1)}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/60 bg-[var(--color-card)] text-xl font-bold text-[var(--color-primary)] transition hover:border-black hover:bg-[var(--color-accent)]"
               aria-label="Anterior"
             >
               ‹
@@ -130,15 +156,17 @@ function MediaBlock({
                   key={pi}
                   type="button"
                   onClick={() => setPageIdx(pi)}
-                  className={`rounded-full transition-all duration-200 ${pi === pageIdx ? "h-2.5 w-2.5 bg-black" : "h-2 w-2 bg-black/20 hover:bg-black/40"}`}
+                  className={`rounded-full transition-all duration-300 ${
+                    pi === pageIdx ? "w-5 h-2 bg-black" : "h-2 w-2 bg-black/20 hover:bg-black/40"
+                  }`}
                   aria-label={`Página ${pi + 1}`}
                 />
               ))}
             </div>
             <button
               type="button"
-              onClick={goNext}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/60 bg-[var(--color-card)] text-lg font-bold text-[var(--color-primary)] transition hover:border-black"
+              onClick={() => navigate(1)}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/60 bg-[var(--color-card)] text-xl font-bold text-[var(--color-primary)] transition hover:border-black hover:bg-[var(--color-accent)]"
               aria-label="Siguiente"
             >
               ›
@@ -207,32 +235,16 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
           { id: "ft2", title: "Rostro + accion", description: "Composicion movil.", url: undefined, kind: "thumb" as const },
           { id: "ft3", title: "Promesa + curiosidad", description: "Sin clickbait.", url: undefined, kind: "thumb" as const },
           { id: "ft4", title: "Marca consistente", description: "Sistema visual.", url: undefined, kind: "thumb" as const },
+          { id: "ft5", title: "Contraste alto", description: "Maxima visibilidad.", url: undefined, kind: "thumb" as const },
+          { id: "ft6", title: "Emotion-first", description: "Conecta antes del clic.", url: undefined, kind: "thumb" as const },
         ];
 
   return (
-    /* gap-5 = 20px  |  Desktop: 2 cols, 2 rows, altura fija para alinear bordes */
-    <div className="grid grid-cols-1 gap-5 lg:h-[640px] lg:grid-cols-[5fr_8fr] lg:grid-rows-[1fr_1fr]">
-      {/* Izquierda: vertical, ocupa las 2 filas */}
-      <MediaBlock
-        variant="vertical"
-        items={vItems}
-        autoMs={5000}
-        className="lg:row-span-2 lg:h-full"
-      />
-      {/* Derecha arriba: horizontal */}
-      <MediaBlock
-        variant="horizontal"
-        items={hItems}
-        autoMs={5500}
-        className="lg:h-full"
-      />
-      {/* Derecha abajo: miniaturas de 2 en 2 */}
-      <MediaBlock
-        variant="thumbs"
-        items={tItems}
-        autoMs={3500}
-        className="lg:h-full"
-      />
+    /* gap-5 = 20px | 3fr_8fr: vertical más estrecho que la columna derecha */
+    <div className="grid grid-cols-1 gap-5 lg:h-[640px] lg:grid-cols-[3fr_8fr] lg:grid-rows-[1fr_1fr]">
+      <MediaBlock variant="vertical" items={vItems} autoMs={5000} className="lg:row-span-2 lg:h-full" />
+      <MediaBlock variant="horizontal" items={hItems} autoMs={5500} className="lg:h-full" />
+      <MediaBlock variant="thumbs" items={tItems} autoMs={3500} className="lg:h-full" />
     </div>
   );
 }
