@@ -64,13 +64,24 @@ export async function Work() {
     url: getYoutubeEmbed(project.videoUrl),
     kind: "video",
   }));
+  const thumbnailItems: SliderMediaItem[] = projects
+    .filter((project) => Boolean(project.thumbnailUrl))
+    .map((project) => ({
+      id: `thumb-${project.id}`,
+      title: project.title,
+      description: project.description,
+      url: project.thumbnailUrl || undefined,
+      kind: "thumb" as const,
+    }))
+    .slice(0, 8);
 
   return (
-    <section id="prueba" className="py-10 md:py-14 lg:py-16" aria-labelledby="work-title">
+    <section id="prueba" className="section-shell" aria-labelledby="work-title">
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
+        <p className="section-kicker">Resultados</p>
         <h2
           id="work-title"
-          className="mb-3 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+          className="section-title-premium mb-3 text-[clamp(1.65rem,3.5vw,2.45rem)] font-bold"
         >
           Prueba social, no promesas vacías
         </h2>
@@ -93,7 +104,11 @@ export async function Work() {
 
         {!dbError && projects.length > 0 && (
           <>
-            <WorkSliders verticalItems={verticalItems} horizontalItems={horizontalItems} />
+            <WorkSliders
+              verticalItems={verticalItems}
+              horizontalItems={horizontalItems}
+              thumbnailItems={thumbnailItems}
+            />
           </>
         )}
       </div>
@@ -103,7 +118,7 @@ export async function Work() {
 
 export function WorkSkeleton() {
   return (
-    <section id="prueba" className="py-10 md:py-14 lg:py-16" aria-labelledby="work-title">
+    <section id="prueba" className="section-shell" aria-labelledby="work-title">
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <h2
           id="work-title"

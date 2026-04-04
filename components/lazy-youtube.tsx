@@ -16,6 +16,7 @@ type LazyYouTubeProps = {
   url: string;
   title: string;
   portrait?: boolean;
+  autoplayMuted?: boolean;
 };
 
 function PlayIcon() {
@@ -26,8 +27,8 @@ function PlayIcon() {
   );
 }
 
-export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) {
-  const [loaded, setLoaded] = useState(false);
+export function LazyYouTube({ url, title, portrait = false, autoplayMuted = false }: LazyYouTubeProps) {
+  const [loaded, setLoaded] = useState(autoplayMuted);
   const videoId = useMemo(() => extractVideoId(url), [url]);
 
   const landscapeShell = "relative overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10 aspect-video";
@@ -38,7 +39,7 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
     return (
       <div className={portrait ? portraitShell : landscapeShell}>
         <iframe
-          src={url}
+          src={autoplayMuted ? `${url}${url.includes("?") ? "&" : "?"}autoplay=1&mute=1&playsinline=1` : url}
           title={title}
           loading="lazy"
           className="absolute inset-0 h-full w-full"
@@ -49,7 +50,9 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
     );
   }
 
-  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+  const embedUrl = autoplayMuted
+    ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${videoId}&rel=0`
+    : `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
   const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
   return (
