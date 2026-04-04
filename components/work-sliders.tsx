@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { LazyYouTube } from "@/components/lazy-youtube";
-import { useAutoplaySlider } from "@/hooks/use-autoplay-slider";
 
 type MediaItem = {
   id: string;
@@ -13,111 +13,133 @@ type MediaItem = {
   kind: "video" | "thumb";
 };
 
-function chunkOf<T>(arr: T[], size: number): T[][] {
-  const out: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-  return out;
+// ── Shared controls ───────────────────────────────────────────────────────────
+
+function SliderControls({
+  total,
+  index,
+  onPrev,
+  onNext,
+  onDot,
+}: {
+  total: number;
+  index: number;
+  onPrev: () => void;
+  onNext: () => void;
+  onDot: (i: number) => void;
+}) {
+  if (total <= 1) return <div className="h-8" aria-hidden="true" />;
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <button
+        type="button"
+        onClick={onPrev}
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/50 bg-[var(--color-card)] text-xl font-bold text-[var(--color-primary)] transition hover:border-black hover:bg-[var(--color-accent)]"
+        aria-label="Anterior"
+      >
+        ‹
+      </button>
+      <div className="flex items-center gap-1.5">
+        {Array.from({ length: total }).map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onDot(i)}
+            className={`rounded-full transition-all duration-300 ${
+              i === index ? "h-2 w-5 bg-[var(--color-primary)]" : "h-2 w-2 bg-black/20 hover:bg-black/40"
+            }`}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={onNext}
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/50 bg-[var(--color-card)] text-xl font-bold text-[var(--color-primary)] transition hover:border-black hover:bg-[var(--color-accent)]"
+        aria-label="Siguiente"
+      >
+        ›
+      </button>
+    </div>
+  );
 }
 
-type BlockVariant = "vertical" | "horizontal" | "thumbs";
+// ── VideoBlock: single item slide, directional animation ─────────────────────
 
-const slideVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? "-100%" : "100%", opacity: 0 }),
+const videoVariants = {
+  enter: (d: number) => ({ x: d >= 0 ? "52%" : "-52%", opacity: 0, scale: 0.97 }),
+  center: { x: 0, opacity: 1, scale: 1 },
+  exit: (d: number) => ({ x: d >= 0 ? "-52%" : "52%", opacity: 0, scale: 0.97 }),
 };
 
-function MediaBlock({
+function VideoBlock({
   items,
-  variant,
-  autoMs = 4500,
-  className = "",
+  portrait,
+  autoMs,
+  className,
 }: {
   items: MediaItem[];
-  variant: BlockVariant;
-  autoMs?: number;
+  portrait: boolean;
+  autoMs: number;
   className?: string;
 }) {
-  const isPortrait = variant === "vertical";
-  const isThumbs = variant === "thumbs";
+  const [idx, setIdx] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [paused, setPaused] = useState(false);
 
-  const pages = isThumbs ? chunkOf(items, 3) : items.map((i) => [i]);
-  const { index: pageIdx, setIndex: setPageIdx, setPaused } = useAutoplaySlider(pages.length, autoMs);
+  useEffect(() => {
+    if (paused || items.length <= 1) return;
+    const t = setInterval(() => {
+      setDir(1);
+      setIdx((i) => (i + 1) % items.length);
+    }, autoMs);
+    return () => clearInterval(t);
+  }, [paused, items.length, autoMs]);
 
-  const currentPage = pages[pageIdx] ?? pages[0] ?? [];
-  const currentItem = currentPage[0];
-
-  const navigate = (dir: 1 | -1) => {
-    setPaused(true);
-    setPageIdx((i) => (i + dir + pages.length) % pages.length);
-    setTimeout(() => setPaused(false), 200);
+  const navigate = (d: 1 | -1) => {
+    setDir(d);
+    setIdx((i) => (i + d + items.length) % items.length);
   };
 
-  const mobileAspect = isPortrait ? "aspect-[9/16]" : isThumbs ? "aspect-[4/3]" : "aspect-video";
-
-  const thumbCols =
-    currentPage.length === 1 ? "grid-cols-1" : currentPage.length === 2 ? "grid-cols-2" : "grid-cols-3";
+  const current = items[idx];
+  const mobileAspect = portrait ? "aspect-[9/16]" : "aspect-video";
 
   return (
     <article
-      className={`flex flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:shadow-[0_14px_32px_rgba(0,0,0,0.12)] ${className}`}
+      className={`flex flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:shadow-[0_14px_32px_rgba(0,0,0,0.12)] ${className ?? ""}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* ── MEDIA ── */}
       <div
         className={`relative w-full overflow-hidden rounded-2xl bg-black ${mobileAspect} lg:aspect-auto lg:min-h-0 lg:flex-1`}
       >
-        <AnimatePresence initial={false} custom={1} mode="wait">
+        <AnimatePresence custom={dir} initial={false}>
           <motion.div
-            key={pageIdx}
-            custom={1}
-            variants={slideVariants}
+            key={idx}
+            custom={dir}
+            variants={videoVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.42, ease: [0.33, 1, 0.68, 1] }}
             className="absolute inset-0"
           >
-            {isThumbs ? (
-              <div className={`grid h-full gap-2 p-2 ${thumbCols}`}>
-                {currentPage.map((item) => (
-                  <div key={item.id} className="relative overflow-hidden rounded-xl bg-neutral-200">
-                    {item.url ? (
-                      <Image
-                        src={item.url}
-                        fill
-                        className="object-cover"
-                        alt={item.title}
-                        unoptimized
-                        sizes="(max-width: 1024px) 30vw, 18vw"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-300 p-2">
-                        <span className="text-center text-[10px] font-semibold leading-snug text-neutral-500">
-                          {item.title}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : currentItem?.kind === "video" && currentItem?.url ? (
+            {current?.kind === "video" && current?.url ? (
               <LazyYouTube
-                url={currentItem.url}
-                title={currentItem.title}
-                portrait={isPortrait}
+                url={current.url}
+                title={current.title}
+                portrait={portrait}
                 fillHeight
                 autoplayMuted
               />
-            ) : currentItem?.url ? (
+            ) : current?.url ? (
               <Image
-                src={currentItem.url}
+                src={current.url}
                 fill
                 className="object-cover"
-                alt={currentItem.title ?? ""}
+                alt={current.title}
                 unoptimized
-                sizes="(max-width: 1024px) 90vw, 55vw"
+                sizes="(max-width:1024px) 90vw, 55vw"
               />
             ) : (
               <div className="h-full w-full bg-neutral-200" />
@@ -126,59 +148,160 @@ function MediaBlock({
         </AnimatePresence>
       </div>
 
-      {/* ── TEXTO ── */}
       <div className="mt-2.5 shrink-0">
         <h3 className="text-sm font-semibold text-[var(--color-primary)] md:text-base">
-          {currentItem?.title ?? "—"}
+          {current?.title ?? "—"}
         </h3>
-        {currentItem?.description ? (
+        {current?.description ? (
           <p className="mt-0.5 text-xs leading-snug text-[var(--color-text)] md:text-sm">
-            {currentItem.description}
+            {current.description}
           </p>
         ) : null}
       </div>
 
-      {/* ── CONTROLES: debajo del texto, nunca sobre la imagen ── */}
-      <div className="mt-2.5 flex shrink-0 items-center justify-between gap-2">
-        {pages.length > 1 ? (
-          <>
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/60 bg-[var(--color-card)] text-xl font-bold text-[var(--color-primary)] transition hover:border-black hover:bg-[var(--color-accent)]"
-              aria-label="Anterior"
-            >
-              ‹
-            </button>
-            <div className="flex items-center gap-1.5">
-              {pages.map((_, pi) => (
-                <button
-                  key={pi}
-                  type="button"
-                  onClick={() => setPageIdx(pi)}
-                  className={`rounded-full transition-all duration-300 ${
-                    pi === pageIdx ? "w-5 h-2 bg-black" : "h-2 w-2 bg-black/20 hover:bg-black/40"
-                  }`}
-                  aria-label={`Página ${pi + 1}`}
-                />
-              ))}
-            </div>
-            <button
-              type="button"
-              onClick={() => navigate(1)}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-black/60 bg-[var(--color-card)] text-xl font-bold text-[var(--color-primary)] transition hover:border-black hover:bg-[var(--color-accent)]"
-              aria-label="Siguiente"
-            >
-              ›
-            </button>
-          </>
-        ) : (
-          <div className="h-8" aria-hidden="true" />
-        )}
+      <div className="mt-2.5 shrink-0">
+        <SliderControls
+          total={items.length}
+          index={idx}
+          onPrev={() => navigate(-1)}
+          onNext={() => navigate(1)}
+          onDot={(i) => {
+            setDir(i > idx ? 1 : -1);
+            setIdx(i);
+          }}
+        />
       </div>
     </article>
   );
 }
+
+// ── ThumbsBlock: 3 visibles al mismo tiempo, desplaza 1 ──────────────────────
+
+const VISIBLE = 3;
+const THUMB_GAP = 8;
+
+function ThumbsBlock({
+  items,
+  autoMs,
+  className,
+}: {
+  items: MediaItem[];
+  autoMs: number;
+  className?: string;
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [stepPx, setStepPx] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const maxOffset = Math.max(0, items.length - VISIBLE);
+
+  /* Calcula el ancho de cada item en función del contenedor */
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const calc = () => {
+      const W = el.offsetWidth;
+      /* itemWidth = (W - gaps) / VISIBLE;  step = itemWidth + gap */
+      setStepPx((W - THUMB_GAP * (VISIBLE - 1)) / VISIBLE + THUMB_GAP);
+    };
+    calc();
+    const ro = new ResizeObserver(calc);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (paused || maxOffset === 0) return;
+    const t = setInterval(
+      () => setOffset((o) => (o >= maxOffset ? 0 : o + 1)),
+      autoMs,
+    );
+    return () => clearInterval(t);
+  }, [paused, maxOffset, autoMs]);
+
+  const navigate = (d: 1 | -1) =>
+    setOffset((o) =>
+      d === 1 ? (o >= maxOffset ? 0 : o + 1) : Math.max(0, o - 1),
+    );
+
+  const itemWidth = stepPx > 0 ? stepPx - THUMB_GAP : 0;
+  const current = items[offset];
+  const dotsCount = maxOffset + 1;
+
+  return (
+    <article
+      className={`flex flex-col rounded-3xl border-4 border-black bg-[var(--color-card)] p-3 transition duration-300 hover:shadow-[0_14px_32px_rgba(0,0,0,0.12)] ${className ?? ""}`}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Track: overflow hidden, translate continuo */}
+      <div
+        ref={wrapRef}
+        className="relative w-full overflow-hidden rounded-2xl bg-black aspect-[4/3] lg:aspect-auto lg:min-h-0 lg:flex-1"
+      >
+        <motion.div
+          className="absolute inset-y-0 left-0 flex"
+          style={{ gap: THUMB_GAP }}
+          animate={{ x: -offset * stepPx }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        >
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="relative h-full flex-shrink-0 overflow-hidden rounded-xl bg-neutral-200"
+              style={{
+                width:
+                  itemWidth > 0
+                    ? `${itemWidth}px`
+                    : `calc((100% - ${THUMB_GAP * (VISIBLE - 1)}px) / ${VISIBLE})`,
+              }}
+            >
+              {item.url ? (
+                <Image
+                  src={item.url}
+                  fill
+                  className="object-cover"
+                  alt={item.title}
+                  unoptimized
+                  sizes="(max-width:1024px) 30vw, 18vw"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-300 p-2">
+                  <span className="text-center text-[10px] font-semibold leading-snug text-neutral-500">
+                    {item.title}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="mt-2.5 shrink-0">
+        <h3 className="text-sm font-semibold text-[var(--color-primary)] md:text-base">
+          {current?.title ?? "—"}
+        </h3>
+        {current?.description ? (
+          <p className="mt-0.5 text-xs leading-snug text-[var(--color-text)] md:text-sm">
+            {current.description}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="mt-2.5 shrink-0">
+        <SliderControls
+          total={dotsCount}
+          index={offset}
+          onPrev={() => navigate(-1)}
+          onNext={() => navigate(1)}
+          onDot={(i) => setOffset(i)}
+        />
+      </div>
+    </article>
+  );
+}
+
+// ── WorkSliders ───────────────────────────────────────────────────────────────
 
 type WorkSlidersProps = {
   verticalItems: MediaItem[];
@@ -186,45 +309,25 @@ type WorkSlidersProps = {
   thumbnailItems: MediaItem[];
 };
 
-export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: WorkSlidersProps) {
+export function WorkSliders({
+  verticalItems,
+  horizontalItems,
+  thumbnailItems,
+}: WorkSlidersProps) {
   const vItems =
     verticalItems.length > 0
       ? verticalItems
       : [
-          {
-            id: "fv1",
-            title: "Short Engagement - Tutorial",
-            description: "Vertical con foco en hook y retencion inicial.",
-            url: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
-            kind: "video" as const,
-          },
-          {
-            id: "fv2",
-            title: "Short Viral - Productividad",
-            description: "Ejemplo vertical para TikTok/Reels con ritmo rapido.",
-            url: "https://www.youtube-nocookie.com/embed/ysz5S6PUM-U",
-            kind: "video" as const,
-          },
+          { id: "fv1", title: "Short Engagement - Tutorial", description: "Vertical con foco en hook y retencion inicial.", url: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ", kind: "video" as const },
+          { id: "fv2", title: "Short Viral - Productividad", description: "Ejemplo vertical para TikTok/Reels con ritmo rapido.", url: "https://www.youtube-nocookie.com/embed/ysz5S6PUM-U", kind: "video" as const },
         ];
 
   const hItems =
     horizontalItems.length > 0
       ? horizontalItems
       : [
-          {
-            id: "fh1",
-            title: "YouTube Long Form - Tutorial",
-            description: "Caso horizontal para YouTube de formato largo.",
-            url: "https://www.youtube-nocookie.com/embed/ysz5S6PUM-U",
-            kind: "video" as const,
-          },
-          {
-            id: "fh2",
-            title: "YouTube Serie - Episodio",
-            description: "Formato horizontal para contenido largo con narrativa.",
-            url: "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw",
-            kind: "video" as const,
-          },
+          { id: "fh1", title: "YouTube Long Form - Tutorial", description: "Caso horizontal para YouTube de formato largo.", url: "https://www.youtube-nocookie.com/embed/ysz5S6PUM-U", kind: "video" as const },
+          { id: "fh2", title: "YouTube Serie - Episodio", description: "Formato horizontal para contenido largo con narrativa.", url: "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw", kind: "video" as const },
         ];
 
   const tItems =
@@ -240,11 +343,10 @@ export function WorkSliders({ verticalItems, horizontalItems, thumbnailItems }: 
         ];
 
   return (
-    /* gap-5 = 20px | 3fr_8fr: vertical más estrecho que la columna derecha */
     <div className="grid grid-cols-1 gap-5 lg:h-[640px] lg:grid-cols-[3fr_8fr] lg:grid-rows-[1fr_1fr]">
-      <MediaBlock variant="vertical" items={vItems} autoMs={5000} className="lg:row-span-2 lg:h-full" />
-      <MediaBlock variant="horizontal" items={hItems} autoMs={5500} className="lg:h-full" />
-      <MediaBlock variant="thumbs" items={tItems} autoMs={3500} className="lg:h-full" />
+      <VideoBlock portrait items={vItems} autoMs={5000} className="lg:row-span-2 lg:h-full" />
+      <VideoBlock portrait={false} items={hItems} autoMs={5500} className="lg:h-full" />
+      <ThumbsBlock items={tItems} autoMs={3000} className="lg:h-full" />
     </div>
   );
 }
