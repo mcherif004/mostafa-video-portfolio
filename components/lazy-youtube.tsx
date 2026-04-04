@@ -24,7 +24,11 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
 
   if (!videoId) {
     return (
-      <div className={`relative overflow-hidden bg-black ${portrait ? "aspect-[9/16]" : "aspect-video"}`}>
+      <div
+        className={`relative overflow-hidden bg-black ${
+          portrait ? "mx-auto aspect-[9/16] h-[min(60vh,640px)] max-h-[60vh]" : "aspect-video"
+        }`}
+      >
         <iframe
           src={url}
           title={title}
@@ -42,7 +46,9 @@ export function LazyYouTube({ url, title, portrait = false }: LazyYouTubeProps) 
 
   return (
     <div
-      className={`group relative cursor-pointer overflow-hidden bg-black ${portrait ? "mx-auto aspect-[9/16] max-w-[340px]" : "aspect-video"}`}
+      className={`group relative cursor-pointer overflow-hidden bg-black ${
+        portrait ? "mx-auto aspect-[9/16] h-[min(60vh,640px)] max-h-[60vh]" : "aspect-video"
+      }`}
       onClick={() => setLoaded(true)}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
