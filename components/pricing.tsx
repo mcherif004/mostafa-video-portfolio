@@ -96,82 +96,82 @@ function PricingBentoPanel({
 export function Pricing() {
   const verticalPlans: PlanMini[] = [
     {
-      id: "starter",
-      name: "Starter",
-      subtitle: "Volumen base",
-      price: "39€",
-      priceNote: "por clip",
-      features: ["Corte dinamico", "Subtitulos nativos", "Color base", "1 revision"],
+      id: "v-base",
+      name: "Base",
+      subtitle: "Vídeo suelto",
+      price: "15€",
+      priceNote: "por vídeo",
+      promoBadge: "Oferta: 7€/vídeo contratando 2 o más",
+      features: ["Final: 30–45 s", "Material: hasta 5 min", "1 revisión"],
       highlighted: false,
     },
     {
-      id: "impulse",
-      name: "Impulse",
-      subtitle: "Plan destacado",
-      price: "19€",
-      priceNote: "por clip",
-      promoBadge: "Promo: 7€ por clip (al contratar +2 clips)",
-      features: ["Todo lo de Starter", "Hooks visuales", "Sound design", "B-roll", "Adaptacion a algoritmo"],
+      id: "v-estandar",
+      name: "Estándar",
+      subtitle: "Más pulido",
+      price: "30€",
+      priceNote: "por vídeo",
+      features: ["Audio, texto y ritmo mejorados", "Final: 1:00–1:30", "Material: hasta 10 min", "2 revisiones"],
       highlighted: true,
     },
     {
-      id: "authority",
-      name: "Authority",
-      subtitle: "Elite / marca",
-      price: "149€",
-      priceNote: "por clip",
-      features: ["Todo lo de Impulse", "Motion Graphics Pro", "VFX avanzados", "Prioridad de agenda"],
+      id: "v-premium",
+      name: "Premium",
+      subtitle: "Edición trabajada",
+      price: "70€",
+      priceNote: "por vídeo",
+      features: ["Narrativa, ritmo y detalles visuales", "Final: hasta 3:00", "Material: hasta 15 min", "3 revisiones"],
       highlighted: false,
     },
   ];
 
   const horizontalPlans: PlanMini[] = [
     {
-      id: "h-starter",
-      name: "Starter",
-      price: "180€",
-      note: "Video largo 10-15 min",
-      features: ["1 revision", "Edicion narrativa", "Audio limpio"],
+      id: "h-base",
+      name: "Base",
+      price: "30€",
+      note: "Final: 10–15 min",
+      features: ["Montaje claro y estable", "Material: hasta 30 min", "1 revisión"],
       highlighted: false,
     },
     {
-      id: "h-growth",
-      name: "Growth",
-      price: "290€",
-      note: "Video largo 20-30 min",
-      features: ["2 revisiones", "Ritmo avanzado", "Refuerzo visual"],
+      id: "h-estandar",
+      name: "Estándar",
+      price: "60€",
+      note: "Final: 20–25 min",
+      features: ["Mejor narrativa, música y apoyo visual", "Material: hasta 1 h", "2 revisiones"],
       highlighted: true,
     },
     {
-      id: "h-authority",
-      name: "Authority",
-      price: "450€",
-      note: "Video largo 30-45 min",
-      features: ["3 revisiones", "Post-produccion premium", "Prioridad total"],
+      id: "h-premium",
+      name: "Premium",
+      price: "110€",
+      note: "Final: 30–35 min",
+      features: ["Estructura, ritmo y detalle completos", "Material: hasta 2 h", "3 revisiones"],
       highlighted: false,
     },
   ];
 
   const miniaturasPlans: PlanMini[] = [
     {
-      id: "thumb-1",
-      name: "Miniatura premium",
-      price: "55€",
-      note: "Diseno unico orientado a CTR alto.",
+      id: "thumb-suelta",
+      name: "Suelta",
+      price: "10€",
+      note: "Diseño único orientado a CTR. Entrega en PNG/JPG.",
       highlighted: false,
     },
     {
-      id: "thumb-2",
-      name: "Pack 5 miniaturas",
-      price: "240€",
-      note: "Sistema visual completo para serie.",
+      id: "thumb-pack5",
+      name: "Pack 5",
+      price: "45€",
+      note: "Sistema visual para serie. Coherencia y marca consistente.",
       highlighted: true,
     },
     {
-      id: "thumb-3",
-      name: "Pack 10 miniaturas",
-      price: "450€",
-      note: "Escala de contenido para canal pro.",
+      id: "thumb-pack10",
+      name: "Pack 10",
+      price: "85€",
+      note: "Escala de contenido. Plazo según cola — fecha concreta al reservar.",
       highlighted: false,
     },
   ];
@@ -184,7 +184,7 @@ export function Pricing() {
           Inversion High-Ticket
         </h2>
         <p className="mb-5 max-w-3xl text-sm font-medium leading-relaxed text-[var(--color-text)]">
-          Verticales en columna estrecha; miniaturas y horizontal a la derecha. Plan central destacado en cada bloque.
+          Precio por vídeo según plan. Revisiones incluidas. Extras claros si superas límites: +1€/min de vídeo final y +5€ por cada 10 min de material extra.
         </p>
 
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 md:gap-6 lg:flex-row lg:items-start">

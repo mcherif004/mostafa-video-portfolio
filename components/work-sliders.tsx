@@ -345,16 +345,23 @@ export function WorkSliders({
       : [
           {
             id: "fv1",
-            title: "Short Engagement",
-            description: "Vertical con foco en hook y retencion inicial.",
-            url: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+            title: "YouTube Short #01",
+            description: "Likes: 124K · Views: 1.9M",
+            url: "https://www.youtube-nocookie.com/embed/Kj0xnYV1M0w",
             kind: "video" as const,
           },
           {
             id: "fv2",
-            title: "Short Viral",
-            description: "TikTok/Reels con ritmo rapido y gancho visual.",
-            url: "https://www.youtube-nocookie.com/embed/ysz5S6PUM-U",
+            title: "YouTube Short #02",
+            description: "Likes: 86K · Views: 1.2M",
+            url: "https://www.youtube-nocookie.com/embed/bD32yrfPmfc",
+            kind: "video" as const,
+          },
+          {
+            id: "fv3",
+            title: "YouTube Short #03",
+            description: "Likes: 12K · Views: 210K",
+            url: "https://www.youtube-nocookie.com/embed/Q1FzK9Mu54U",
             kind: "video" as const,
           },
         ];
@@ -365,16 +372,23 @@ export function WorkSliders({
       : [
           {
             id: "fh1",
-            title: "YouTube Long Form",
-            description: "Caso horizontal para YouTube de formato largo.",
-            url: "https://www.youtube-nocookie.com/embed/ysz5S6PUM-U",
+            title: "YouTube #01",
+            description: "Formato largo · caso real entregado.",
+            url: "https://www.youtube-nocookie.com/embed/MxRjnojmVCE",
             kind: "video" as const,
           },
           {
             id: "fh2",
-            title: "YouTube Serie",
-            description: "Formato horizontal con narrativa continua.",
-            url: "https://www.youtube-nocookie.com/embed/jNQXAC9IVRw",
+            title: "YouTube #02",
+            description: "Formato largo · caso real entregado.",
+            url: "https://www.youtube-nocookie.com/embed/waM70tLmNZI",
+            kind: "video" as const,
+          },
+          {
+            id: "fh3",
+            title: "YouTube #03",
+            description: "Formato largo · caso real entregado.",
+            url: "https://www.youtube-nocookie.com/embed/_b9G5WRZNPA",
             kind: "video" as const,
           },
         ];

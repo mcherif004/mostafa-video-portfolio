@@ -28,24 +28,23 @@ export function Hero() {
               id="hero-title"
               className="mb-4 text-[clamp(1.7rem,5.4vw,3.15rem)] font-bold leading-[1.12] text-[var(--color-primary)]"
             >
-              El algoritmo no perdona el aburrimiento. Tu audiencia tampoco.
+              Tus vídeos no fallan por calidad. Fallan por retención.
             </h1>
             <p className="mb-6 text-[clamp(1rem,2.6vw,1.15rem)] font-semibold leading-relaxed text-[var(--color-text)]">
-              Tu contenido puede crecer o estancarse por los primeros 3 segundos. Yo optimizo hook, ritmo y narrativa
-              para subir retencion y clic sin que pierdas tiempo editando.
+              Edito contenido para que la gente no se vaya. Más retención = más alcance = más crecimiento para tu canal.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#prueba"
                 className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-secondary)]"
               >
-                Ver clips con intención
+                Ver cómo trabajo
               </a>
               <a
                 href="#contacto"
                 className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition hover:-translate-y-0.5 hover:bg-[color:var(--color-primary)]/10"
               >
-                Quiero escalar mi canal
+                Quiero mejorar mi contenido
               </a>
             </div>
           </motion.div>

@@ -17,29 +17,28 @@ export default function TermsPage() {
         <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-[0_12px_30px_rgba(0,0,0,0.08)] md:p-8">
           <ul className="space-y-3 text-sm leading-relaxed text-[var(--color-text)] md:text-base">
             <li>
-              <strong>Informacion inicial:</strong> enviar formato, duracion final, objetivo, referencia y deadline.
+              <strong>Información inicial:</strong> en el primer mensaje envía formato, duración final, objetivo del vídeo, referencias y plazo.
             </li>
             <li>
-              <strong>Material:</strong> enlaces ordenados por carpetas (A-roll, B-roll, audio, recursos) y tomas clave.
+              <strong>Material:</strong> comparte enlaces organizados (Drive/carpeta), nombra clips por orden y marca tomas clave para acelerar la edición.
             </li>
             <li>
-              <strong>Entrega:</strong> por enlace privado (Drive o SwissTransfer) en el formato acordado.
+              <strong>Vertical (Shorts/Reels/TikTok):</strong> incluye límites por plan en vídeo final, material que envías y revisiones. Cambios estructurales fuera del enfoque inicial se cotizan aparte.
             </li>
             <li>
-              <strong>Plazos:</strong> cuentan desde la recepcion completa del material y brief validado.
+              <strong>Horizontal (YouTube):</strong> incluye límites por plan en duración final, material enviado y revisiones. Si el material llega desordenado puede requerir limpieza previa.
             </li>
             <li>
-              <strong>Revisiones:</strong> segun el plan contratado. Cambios de alcance se cotizan aparte.
+              <strong>Miniaturas:</strong> incluye propuesta basada en brief y ajustes sobre la misma línea creativa. Rediseño completo o cambio de concepto va como nuevo encargo.
             </li>
             <li>
-              <strong>Pago:</strong> 50% para reserva de agenda y 50% al cierre de entrega.
+              <strong>Pago y reserva:</strong> 50% por adelantado para reservar agenda; el resto al cerrar entrega final acordada.
             </li>
             <li>
-              <strong>Derechos:</strong> el cliente garantiza derechos del material enviado y recibe uso comercial de la
-              version final entregada.
+              <strong>Coste extra:</strong> +1€/min de vídeo final extra y +5€ por cada 10 min de material extra. Urgencias, motion avanzado, proyecto fuente o re-montaje completo se presupuestan aparte.
             </li>
             <li>
-              <strong>Resultados:</strong> no se garantizan views/ventas exactas porque dependen de factores externos.
+              <strong>Derechos:</strong> el cliente garantiza que tiene derechos del material enviado. Recibe uso comercial de la versión final entregada. Archivos fuente solo si se acuerda por escrito.
             </li>
           </ul>
           <div className="mt-6 border-t border-[var(--color-border)] pt-5">
