@@ -111,7 +111,7 @@ function VideoBlock({
       onMouseLeave={() => setPaused(false)}
     >
       <div
-        className={`relative w-full overflow-hidden rounded-2xl bg-black ${mobileAspect} lg:aspect-auto lg:min-h-0 lg:flex-1`}
+        className={`relative w-full overflow-hidden rounded-2xl bg-black ${mobileAspect}`}
       >
         <AnimatePresence custom={dir} initial={false}>
           <motion.div
@@ -237,7 +237,7 @@ function ThumbsBlock({
       {/* Track: overflow hidden, translate continuo */}
       <div
         ref={wrapRef}
-        className="relative w-full overflow-hidden rounded-2xl bg-black aspect-[4/3] lg:aspect-auto lg:min-h-0 lg:flex-1"
+        className="relative w-full overflow-hidden rounded-2xl bg-black aspect-[4/3]"
       >
         <motion.div
           className="absolute inset-y-0 left-0 flex"
@@ -343,10 +343,20 @@ export function WorkSliders({
         ];
 
   return (
-    <div className="grid grid-cols-1 gap-5 lg:h-[640px] lg:grid-cols-[3fr_8fr] lg:grid-rows-[1fr_1fr]">
-      <VideoBlock portrait items={vItems} autoMs={5000} className="lg:row-span-2 lg:h-full" />
-      <VideoBlock portrait={false} items={hItems} autoMs={5500} className="lg:h-full" />
-      <ThumbsBlock items={tItems} autoMs={3000} className="lg:h-full" />
+    /* flex-row en desktop: vertical a la izquierda (ancho fijo), columna derecha flexible */
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
+      {/* Izquierda: vertical 9:16 natural, ancho fijo para que el Short se vea entero */}
+      <VideoBlock
+        portrait
+        items={vItems}
+        autoMs={5000}
+        className="w-full sm:max-w-[340px] lg:w-[220px] lg:max-w-none lg:shrink-0 xl:w-[260px]"
+      />
+      {/* Derecha: horizontal arriba, miniaturas abajo, cada uno con su aspect ratio natural */}
+      <div className="flex min-w-0 flex-1 flex-col gap-5">
+        <VideoBlock portrait={false} items={hItems} autoMs={5500} />
+        <ThumbsBlock items={tItems} autoMs={3000} />
+      </div>
     </div>
   );
 }
