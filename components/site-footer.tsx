@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function SiteFooter() {
   return (
     <footer className="bg-[var(--color-footer-bg)] py-12 text-center text-sm text-[var(--color-footer-text)]">
@@ -11,16 +13,21 @@ export function SiteFooter() {
             <h3 className="mb-2 text-sm font-semibold">Navegación</h3>
             <ul className="space-y-2 text-xs/relaxed text-white/90">
               <li>
-                <a href="#hero">Inicio</a>
+                <Link href="/#hero">Inicio</Link>
               </li>
               <li>
-                <a href="#prueba">Trabajo</a>
+                <Link href="/#prueba">Trabajo</Link>
               </li>
               <li>
-                <a href="#pricing">Precios</a>
+                <Link href="/#pricing">Precios</Link>
               </li>
               <li>
-                <a href="#contacto">Contacto</a>
+                <Link href="/#contacto">Contacto</Link>
+              </li>
+              <li>
+                <Link href="/terms" className="font-semibold text-white underline-offset-4 hover:underline">
+                  Condiciones
+                </Link>
               </li>
             </ul>
           </div>
@@ -31,7 +38,10 @@ export function SiteFooter() {
               <li>Revisiones acordadas por plan — sin sorpresas en el cierre.</li>
               <li>Extras cotizados si el scope crece; nada oculto en letra pequeña.</li>
               <li>
-                <a href="#pricing">Ver planes</a>
+                <Link href="/#pricing">Ver planes</Link>
+              </li>
+              <li>
+                <Link href="/auth/login">Acceso cliente</Link>
               </li>
             </ul>
           </div>
@@ -42,7 +52,7 @@ export function SiteFooter() {
               <li>Material y referencias</li>
               <li>Meta: retención, lanzamiento, campaña…</li>
               <li>
-                <a href="#contacto">Enviar brief</a>
+                <Link href="/#contacto">Enviar brief</Link>
               </li>
             </ul>
           </div>

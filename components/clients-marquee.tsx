@@ -81,7 +81,7 @@ export function ClientsMarquee() {
   return (
     <motion.section
       id="clientes"
-      className="overflow-x-clip border-y border-[var(--color-border)] bg-[var(--color-accent)] py-12 md:py-14"
+      className="section-shell overflow-x-clip border-y border-[var(--color-border)] bg-[var(--color-accent)]"
       aria-labelledby="clientes-title"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -89,14 +89,15 @@ export function ClientsMarquee() {
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
+        <p className="section-kicker text-center">Social Proof</p>
         <h2
           id="clientes-title"
-          className="mb-4 text-[clamp(1.45rem,3.2vw,2rem)] font-bold text-[var(--color-primary)] md:text-center"
+          className="section-title-premium mb-4 text-[clamp(1.45rem,3.2vw,2.25rem)] font-bold md:text-center"
         >
           Canales que ya confían en el corte
         </h2>
         <p className="mx-auto mb-8 max-w-3xl text-center text-sm font-medium text-[var(--color-text)] md:text-base">
-          Carrusel continuo: pista duplicada en bucle, animación lineal 0% → −50% sin saltos perceptibles.
+          Creadores que ya han escalado su presencia publicando con consistencia y calidad editorial.
         </p>
       </div>
       <div className="space-y-3">

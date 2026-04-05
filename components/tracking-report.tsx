@@ -17,11 +17,12 @@ const steps = [
 
 export function TrackingReport() {
   return (
-    <section id="tracking" className="py-14 md:py-20 lg:py-24" aria-labelledby="tracking-title">
+    <section id="tracking" className="section-shell" aria-labelledby="tracking-title">
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
+        <p className="section-kicker">Proceso</p>
         <h2
           id="tracking-title"
-          className="mb-4 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+          className="section-title-premium mb-4 text-[clamp(1.65rem,3.5vw,2.45rem)] font-bold"
         >
           Transparencia total, cero ansiedad
         </h2>

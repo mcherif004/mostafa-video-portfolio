@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 export function Hero() {
@@ -8,7 +7,7 @@ export function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="bg-[radial-gradient(circle_at_20%_20%,rgba(0,123,255,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(0,86,179,0.10),transparent_50%)] py-14 md:py-20 lg:py-24 dark:bg-[radial-gradient(circle_at_20%_20%,rgba(255,77,77,0.10),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(204,51,51,0.08),transparent_50%)]"
+      className="bg-[radial-gradient(circle_at_20%_20%,rgba(0,123,255,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(0,86,179,0.10),transparent_50%)] py-10 md:py-14 lg:py-16 dark:bg-[radial-gradient(circle_at_20%_20%,rgba(255,77,77,0.10),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(204,51,51,0.08),transparent_50%)]"
     >
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.62fr]">
@@ -19,15 +18,8 @@ export function Hero() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
           >
-            <div className="mb-4 inline-flex items-center gap-3">
-              <Image
-                src="/assets/perfil.webp"
-                alt="Foto de perfil de Mostafa Cherif"
-                width={56}
-                height={56}
-                className="h-14 w-14 rounded-full border border-[var(--color-border)] object-cover"
-                priority
-              />
+            <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-card)] text-sm font-bold text-[var(--color-primary)]">
+              MC
             </div>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-secondary)]">
               Mostafa Cherif · Edición orientada a retención y crecimiento
@@ -39,17 +31,8 @@ export function Hero() {
               El algoritmo no perdona el aburrimiento. Tu audiencia tampoco.
             </h1>
             <p className="mb-6 text-[clamp(1rem,2.6vw,1.15rem)] font-semibold leading-relaxed text-[var(--color-text)]">
-              <span className="block text-[var(--color-secondary)]">
-                Problema: publicas mucho y la gente se va en segundos.
-              </span>
-              <span className="mt-2 block">
-                Agitación: sin hooks magnéticos, ritmo y claridad visual, pierdes retención, CTR y tiempo de vida del
-                clip.
-              </span>
-              <span className="mt-2 block">
-                Solución: edición pensada para que el espectador se quede, haga clic y comparta — y tú recuperes horas de
-                producción cada semana.
-              </span>
+              Tu contenido puede crecer o estancarse por los primeros 3 segundos. Yo optimizo hook, ritmo y narrativa
+              para subir retencion y clic sin que pierdas tiempo editando.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
@@ -75,39 +58,19 @@ export function Hero() {
             transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
           >
             <div className="absolute inset-[-45%] bg-[radial-gradient(circle,rgba(0,123,255,0.22),transparent_55%)] dark:bg-[radial-gradient(circle,rgba(255,77,77,0.20),transparent_55%)]" />
-            <div className="relative z-10" aria-label="Stack creativo">
-              <div className="flex items-center justify-center gap-2">
-                <Image
-                  src="/assets/icons/adobe-after-effects-logo-0.png"
-                  alt="After Effects"
-                  width={68}
-                  height={68}
-                  className="h-[74px] w-[74px] rounded-xl object-cover"
-                />
-                <Image
-                  src="/assets/icons/adobe-photoshop-logo-0.png"
-                  alt="Photoshop"
-                  width={68}
-                  height={68}
-                  className="h-[74px] w-[74px] rounded-xl object-cover"
-                />
-                <Image
-                  src="/assets/icons/adobe-premiere-pro-logo-0-1.png"
-                  alt="Premiere Pro"
-                  width={68}
-                  height={68}
-                  className="h-[74px] w-[74px] rounded-xl object-cover"
-                />
-              </div>
+            <div className="relative z-10 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-[var(--color-primary)]">
+              <p className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/70 px-3 py-2">Premiere</p>
+              <p className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/70 px-3 py-2">After</p>
+              <p className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/70 px-3 py-2">PS</p>
             </div>
             <p className="relative z-10 w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
-              Retención real
+              Hook magnetico
             </p>
             <p className="relative z-10 ml-auto w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
-              CTR que vende
+              CTR competitivo
             </p>
             <p className="relative z-10 w-fit rounded-full border border-[var(--color-border)] bg-[color:var(--color-primary)]/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--color-primary)]">
-              Audiencia en crecimiento
+              Escala semanal
             </p>
           </motion.div>
         </div>

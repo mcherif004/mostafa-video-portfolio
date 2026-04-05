@@ -8,18 +8,17 @@ function extractVideoId(url: string) {
   if (shorts) return shorts;
   const watch = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/)?.[1];
   if (watch) return watch;
-  const shortUrl = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/)?.[1];
-  return shortUrl ?? null;
+  return url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/)?.[1] ?? null;
 }
 
-type LazyYouTubeProps = {
+export type LazyYouTubeProps = {
   url: string;
   title: string;
+  /** Render as 9:16 portrait */
   portrait?: boolean;
+  /** Load iframe immediately with autoplay + muted */
   autoplayMuted?: boolean;
-  /** Adapta el ancho al contenedor manteniendo aspect-ratio */
-  fillContainer?: boolean;
-  /** Rellena el contenedor padre al 100% (sin aspect-ratio propio) */
+  /** Fill parent height/width (no intrinsic aspect-ratio) */
   fillHeight?: boolean;
 };
 
@@ -36,7 +35,6 @@ export function LazyYouTube({
   title,
   portrait = false,
   autoplayMuted = false,
-  fillContainer = false,
   fillHeight = false,
 }: LazyYouTubeProps) {
   const [loaded, setLoaded] = useState(autoplayMuted);
@@ -45,80 +43,64 @@ export function LazyYouTube({
   const shell = fillHeight
     ? "relative h-full w-full overflow-hidden rounded-xl bg-black"
     : portrait
-      ? fillContainer
-        ? "relative mx-auto aspect-[9/16] w-full max-w-[min(100%,340px)] overflow-hidden rounded-xl bg-black md:max-w-[min(100%,400px)]"
-        : "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15"
-      : fillContainer
-        ? "relative aspect-video w-full overflow-hidden rounded-xl bg-black"
-        : "relative aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10";
+      ? "relative mx-auto aspect-[9/16] w-full max-w-[280px] max-h-[450px] overflow-hidden rounded-2xl bg-black shadow-[0_16px_48px_rgba(0,0,0,0.22)] ring-1 ring-black/15"
+      : "relative aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_12px_40px_rgba(0,0,0,0.18)] ring-1 ring-black/10";
 
-  const imgSizes = portrait
-    ? fillHeight
-      ? "(max-width: 1024px) 40vw, 480px"
-      : "(max-width: 640px) 85vw, 400px"
-    : "(max-width: 768px) 95vw, 720px";
+  const iframeSrc = videoId
+    ? autoplayMuted
+      ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${videoId}&rel=0`
+      : `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`
+    : autoplayMuted
+      ? `${url}${url.includes("?") ? "&" : "?"}autoplay=1&mute=1&playsinline=1`
+      : url;
 
-  if (!videoId) {
+  const thumbnailUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null;
+
+  if (!videoId || loaded) {
     return (
       <div className={shell}>
         <iframe
-          src={autoplayMuted ? `${url}${url.includes("?") ? "&" : "?"}autoplay=1&mute=1&playsinline=1` : url}
-          title={title}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full border-0"
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
-      </div>
-    );
-  }
-
-  const embedUrl = autoplayMuted
-    ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${videoId}&rel=0`
-    : `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
-  const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-
-  return (
-    <div
-      className={`group ${shell} ${!loaded ? "cursor-pointer" : ""}`}
-      onClick={() => !loaded && setLoaded(true)}
-      onKeyDown={(e) => {
-        if (!loaded && (e.key === "Enter" || e.key === " ")) {
-          e.preventDefault();
-          setLoaded(true);
-        }
-      }}
-      role={loaded ? undefined : "button"}
-      tabIndex={loaded ? undefined : 0}
-      aria-label={loaded ? undefined : `Reproducir: ${title}`}
-    >
-      {loaded ? (
-        <iframe
-          src={embedUrl}
+          src={iframeSrc}
           title={title}
           loading="lazy"
           className="absolute inset-0 h-full w-full border-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
-      ) : (
-        <>
-          <Image
-            src={thumbnailUrl}
-            alt={`Miniatura de ${title}`}
-            fill
-            sizes={imgSizes}
-            className="object-cover transition duration-500 group-hover:scale-[1.04]"
-            unoptimized
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-white/10 backdrop-blur-md transition group-hover:border-white/60 group-hover:bg-white/20">
-              <PlayIcon />
-            </span>
-          </div>
-        </>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`group ${shell} cursor-pointer`}
+      onClick={() => setLoaded(true)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setLoaded(true);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Reproducir: ${title}`}
+    >
+      {thumbnailUrl && (
+        <Image
+          src={thumbnailUrl}
+          alt={`Miniatura de ${title}`}
+          fill
+          sizes={portrait ? "280px" : "(max-width: 768px) 95vw, 720px"}
+          className="object-cover transition duration-500 group-hover:scale-[1.04]"
+          unoptimized
+        />
       )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-white/10 backdrop-blur-md transition group-hover:border-white/60 group-hover:bg-white/20">
+          <PlayIcon />
+        </span>
+      </div>
     </div>
   );
 }

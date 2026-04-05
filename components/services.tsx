@@ -10,10 +10,10 @@ export function Services() {
       cta: "#vertical-pack",
       ctaLabel: "Ver verticales",
       bullets: [
-        "Abres con un hook que obliga a quedarse: menos scroll, más minutos vistos.",
-        "Ritmo cortado para el algoritmo de Shorts, Reels y TikTok — no para ‘verse bonito’.",
-        "Subtítulos y picos visuales donde el ojo ya está mirando: más retención por frame.",
-        "Entregas listas para publicar: tú grabas; el tiempo de edición vuelve a tu calendario.",
+        "Hook fuerte en 1-3 segundos.",
+        "Ritmo diseñado para retencion.",
+        "Subtitulos y cortes para consumo movil.",
+        "Listo para publicar sin retrabajo.",
       ],
     },
     {
@@ -22,10 +22,10 @@ export function Services() {
       cta: "#horizontal-pack",
       ctaLabel: "Ver largos",
       bullets: [
-        "Estructura narrativa que evita la fuga en el minuto dos: más watch time, más recomendación.",
-        "Cortes y silencios trabajados para que el vídeo ‘respire’ sin perder tensión.",
-        "Audio limpio y continuidad visual: credibilidad instantánea y menos abandono.",
-        "Montaje preparado para YouTube: capítulos mentales claros y payoff al final.",
+        "Estructura para sostener watch time.",
+        "Montaje claro y sin relleno.",
+        "Audio limpio y ritmo consistente.",
+        "Enfoque en sesion y retencion media.",
       ],
     },
     {
@@ -34,10 +34,10 @@ export function Services() {
       cta: "#pricing",
       ctaLabel: "Ver inversión",
       bullets: [
-        "Diseño con una sola promesa visual: más clics sin clickbait barato.",
-        "Jerarquía legible en móvil: el 70% de tus impresiones decide en pantalla pequeña.",
-        "Coherencia de marca para que te reconozcan en el feed antes de leer el título.",
-        "Cada pixel empuja al CTR: menos esfuerzo promocional por vídeo publicado.",
+        "Composicion para CTR alto.",
+        "Legible en movil y desktop.",
+        "Marca consistente por serie.",
+        "Pensada para vender el clic.",
       ],
     },
   ];
@@ -46,18 +46,18 @@ export function Services() {
     <section
       id="servicios"
       aria-labelledby="servicios-title"
-      className="bg-[var(--color-accent)]/75 py-14 md:py-20 lg:py-24"
+      className="section-shell bg-[var(--color-accent)]/75"
     >
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
+        <p className="section-kicker">Servicios</p>
         <h2
           id="servicios-title"
-          className="mb-3 text-[clamp(1.65rem,3.5vw,2.25rem)] font-bold text-[var(--color-primary)]"
+          className="section-title-premium mb-3 text-[clamp(1.65rem,3.5vw,2.45rem)] font-bold"
         >
           Lo que hago por tu canal
         </h2>
         <p className="mb-7 max-w-3xl text-sm font-medium leading-relaxed text-[var(--color-text)] md:text-base">
-          No vendo ‘edición’. Vendo decisiones de montaje que suben retención, CTR y crecimiento de audiencia — y te
-          devuelven horas que hoy pierdes en timeline.
+          Mensaje simple: mas retencion, mas clic y menos horas en timeline.
         </p>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {items.map((item, index) => (

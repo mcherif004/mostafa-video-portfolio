@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export function SiteHeader() {
@@ -45,16 +45,13 @@ export function SiteHeader() {
     >
       <div className="mx-auto max-w-content px-4 sm:px-5 md:px-6">
         <div className="grid min-h-14 grid-cols-[1fr_auto_auto] items-center gap-3 py-2 md:min-h-16 md:grid-cols-[auto_1fr_auto]">
-          <a href="#hero" aria-label="Inicio" className="inline-flex items-center">
-            <Image
-              src="/assets/light.webp"
-              alt="Mostafa Cherif"
-              width={44}
-              height={44}
-              className="h-10 w-10 rounded-xl border border-white/20 object-cover md:h-11 md:w-11"
-              priority
-            />
-          </a>
+          <Link
+            href="/#hero"
+            aria-label="Inicio"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-xs font-bold text-white md:h-11 md:w-11"
+          >
+            MC
+          </Link>
 
           <nav
             id="nav-menu"
@@ -63,58 +60,58 @@ export function SiteHeader() {
           >
             <ul className="flex w-full flex-col gap-1 md:w-auto md:flex-row md:items-center">
               <li>
-                <a
-                  href="#hero"
+                <Link
+                  href="/#hero"
                   className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Inicio
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#servicios"
+                <Link
+                  href="/#servicios"
                   className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Servicios
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#prueba"
+                <Link
+                  href="/#prueba"
                   className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Trabajo
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#pricing"
+                <Link
+                  href="/#pricing"
                   className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Precios
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#contacto"
+                <Link
+                  href="/#contacto"
                   className="rounded-full border border-white/25 bg-white/15 px-4 py-2 text-center text-sm font-semibold text-[var(--color-nav-text)] transition hover:bg-[var(--color-primary)] hover:text-white"
                   onClick={() => setMenuOpen(false)}
                 >
                   Contacto
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#condiciones"
+                <Link
+                  href="/terms"
                   className="rounded-full px-3 py-2 text-center text-sm font-medium text-[var(--color-nav-text)]/95 transition hover:bg-white/10"
                   onClick={() => setMenuOpen(false)}
                 >
                   Condiciones
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
